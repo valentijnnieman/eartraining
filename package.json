@@ -1,0 +1,23 @@
+{
+  "name": "eartraining",
+  "version": "0.0.1",
+  "description": "train your ears son",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chunkydory/EarTraining.git"
+  },
+  "author": "Valentijn Nieman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chunkydory/EarTraining/issues"
+  },
+  "homepage": "https://github.com/Chunkydory/EarTraining#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-serve": "^0.1.6"
+  }
+}

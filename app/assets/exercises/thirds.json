@@ -1,0 +1,289 @@
+{
+    "1":
+    {
+        "root": "C",
+        "rootnote": "c/4",
+        "questionnote": "e/4",
+        "interval": "3th"
+    },
+    "2":
+    {
+        "root": "C#",
+        "rootnote": "c#/4",
+        "questionnote": "f/4",
+        "interval": "3th"
+    },
+    "3":
+    {
+        "root": "D",
+        "rootnote": "d/4",
+        "questionnote": "f#/4",
+        "interval": "3th"
+    },
+    "4":
+    {
+        "root": "Eb",
+        "rootnote": "eb/4",
+        "questionnote": "g/4",
+        "interval": "3th"
+    },
+    "5":
+    {
+        "root": "E",
+        "rootnote": "e/4",
+        "questionnote": "g#/4",
+        "interval": "3th"
+    },
+    "6":
+    {
+        "root": "F",
+        "rootnote": "f/4",
+        "questionnote": "a/4",
+        "interval": "3th"
+    },
+    "7":
+    {
+        "root": "F#",
+        "rootnote": "f#/4",
+        "questionnote": "a#/4",
+        "interval": "3th"
+    },
+    "8":
+    {
+        "root": "G",
+        "rootnote": "g/4",
+        "questionnote": "b/4",
+        "interval": "3th"
+    },
+    "9":
+    {
+        "root": "Ab",
+        "rootnote": "ab/4",
+        "questionnote": "c/5",
+        "interval": "3th"
+    },
+    "10":
+    {
+        "root": "A",
+        "rootnote": "a/4",
+        "questionnote": "c#/5",
+        "interval": "3th"
+    },
+    "11":
+    {
+        "root": "Bb",
+        "rootnote": "bb/4",
+        "questionnote": "d/5",
+        "interval": "3th"
+    },
+    "12":
+    {
+        "root": "B",
+        "rootnote": "b/4",
+        "questionnote": "d#/5",
+        "interval": "3th"
+    }, 
+    "13":
+    {
+        "root": "C",
+        "rootnote": "c/5",
+        "questionnote": "e/5",
+        "interval": "3th"
+    },
+    "14":
+    {
+        "root": "C#",
+        "rootnote": "c#/5",
+        "questionnote": "f/5",
+        "interval": "3th"
+    },
+    "15":
+    {
+        "root": "D",
+        "rootnote": "d/5",
+        "questionnote": "f#/5",
+        "interval": "3th"
+    },
+    "16":
+    {
+        "root": "Eb",
+        "rootnote": "eb/5",
+        "questionnote": "g/5",
+        "interval": "3th"
+    },
+    "17":
+    {
+        "root": "E",
+        "rootnote": "e/5",
+        "questionnote": "g#/5",
+        "interval": "3th"
+    },
+    "18":
+    {
+        "root": "F",
+        "rootnote": "f/5",
+        "questionnote": "a/5",
+        "interval": "3th"
+    },
+    "19":
+    {
+        "root": "F#",
+        "rootnote": "f#/5",
+        "questionnote": "a#/5",
+        "interval": "3th"
+    },
+    "20":
+    {
+        "root": "G",
+        "rootnote": "g/5",
+        "questionnote": "b/5",
+        "interval": "3th"
+    },
+    "23":
+    {
+        "root": "C",
+        "rootnote": "c/4",
+        "questionnote": "eb/4",
+        "interval": "m3th"
+    },
+    "24":
+    {
+        "root": "C#",
+        "rootnote": "c#/4",
+        "questionnote": "e/4",
+        "interval": "m3th"
+    },
+    "25":
+    {
+        "root": "D",
+        "rootnote": "d/4",
+        "questionnote": "f/4",
+        "interval": "m3th"
+    },
+    "26":
+    {
+        "root": "Eb",
+        "rootnote": "eb/4",
+        "questionnote": "gb/4",
+        "interval": "m3th"
+    },
+    "27":
+    {
+        "root": "E",
+        "rootnote": "e/4",
+        "questionnote": "g/4",
+        "interval": "m3th"
+    },
+    "28":
+    {
+        "root": "F",
+        "rootnote": "f/4",
+        "questionnote": "ab/4",
+        "interval": "m3th"
+    },
+    "29":
+    {
+        "root": "F#",
+        "rootnote": "f#/4",
+        "questionnote": "a/4",
+        "interval": "m3th"
+    },
+    "30":
+    {
+        "root": "G",
+        "rootnote": "g/4",
+        "questionnote": "bb/4",
+        "interval": "m3th"
+    },
+    "31":
+    {
+        "root": "Ab",
+        "rootnote": "ab/4",
+        "questionnote": "b/4",
+        "interval": "m3th"
+    },
+    "32":
+    {
+        "root": "A",
+        "rootnote": "a/4",
+        "questionnote": "c/5",
+        "interval": "m3th"
+    },
+    "33":
+    {
+        "root": "Bb",
+        "rootnote": "bb/4",
+        "questionnote": "c#/5",
+        "interval": "m3th"
+    },
+    "34":
+    {
+        "root": "B",
+        "rootnote": "b/4",
+        "questionnote": "d/5",
+        "interval": "m3th"
+    }, 
+    "35":
+    {
+        "root": "C",
+        "rootnote": "c/5",
+        "questionnote": "eb/5",
+        "interval": "m3th"
+    },
+    "36":
+    {
+        "root": "C#",
+        "rootnote": "c#/5",
+        "questionnote": "e/5",
+        "interval": "m3th"
+    },
+    "37":
+    {
+        "root": "D",
+        "rootnote": "d/5",
+        "questionnote": "f/5",
+        "interval": "m3th"
+    },
+    "38":
+    {
+        "root": "Eb",
+        "rootnote": "eb/5",
+        "questionnote": "gb/5",
+        "interval": "m3th"
+    },
+    "39":
+    {
+        "root": "E",
+        "rootnote": "e/5",
+        "questionnote": "g/5",
+        "interval": "m3th"
+    },
+    "40":
+    {
+        "root": "F",
+        "rootnote": "f/5",
+        "questionnote": "ab/5",
+        "interval": "m3th"
+    },
+    "41":
+    {
+        "root": "F#",
+        "rootnote": "f#/5",
+        "questionnote": "a/5",
+        "interval": "m3th"
+    },
+    "42":
+    {
+        "root": "G",
+        "rootnote": "g/5",
+        "questionnote": "bb/5",
+        "interval": "m3th"
+    },
+    "43":
+    {
+        "root": "Ab",
+        "rootnote": "ab/5",
+        "questionnote": "b/5",
+        "interval": "m3th"
+    }
+}

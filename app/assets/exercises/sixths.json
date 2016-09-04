@@ -1,0 +1,220 @@
+{
+    "1":
+    {
+        "root": "C",
+        "rootnote": "c/4",
+        "questionnote": "a/4",
+        "interval": "6th"
+    },
+    "2":
+    {
+        "root": "C#",
+        "rootnote": "c#/4",
+        "questionnote": "a#/4",
+        "interval": "6th"
+    },
+    "3":
+    {
+        "root": "D",
+        "rootnote": "d/4",
+        "questionnote": "b/4",
+        "interval": "6th"
+    },
+    "4":
+    {
+        "root": "Eb",
+        "rootnote": "eb/4",
+        "questionnote": "c/5",
+        "interval": "6th"
+    },
+    "5":
+    {
+        "root": "E",
+        "rootnote": "e/4",
+        "questionnote": "c#/5",
+        "interval": "6th"
+    },
+    "6":
+    {
+        "root": "F",
+        "rootnote": "f/4",
+        "questionnote": "d/5",
+        "interval": "6th"
+    },
+    "7":
+    {
+        "root": "F#",
+        "rootnote": "f#/4",
+        "questionnote": "d#/5",
+        "interval": "6th"
+    },
+    "8":
+    {
+        "root": "G",
+        "rootnote": "g/4",
+        "questionnote": "e/5",
+        "interval": "6th"
+    },
+    "9":
+    {
+        "root": "Ab",
+        "rootnote": "ab/4",
+        "questionnote": "f/5",
+        "interval": "6th"
+    },
+    "10":
+    {
+        "root": "A",
+        "rootnote": "a/4",
+        "questionnote": "f#/5",
+        "interval": "6th"
+    },
+    "11":
+    {
+        "root": "Bb",
+        "rootnote": "bb/4",
+        "questionnote": "g/5",
+        "interval": "6th"
+    },
+    "12":
+    {
+        "root": "B",
+        "rootnote": "b/4",
+        "questionnote": "g#/5",
+        "interval": "6th"
+    }, 
+    "13":
+    {
+        "root": "C",
+        "rootnote": "c/5",
+        "questionnote": "a/5",
+        "interval": "6th"
+    },
+    "14":
+    {
+        "root": "C#",
+        "rootnote": "c#/5",
+        "questionnote": "a#/5",
+        "interval": "6th"
+    },
+    "15":
+    {
+        "root": "D",
+        "rootnote": "d/5",
+        "questionnote": "b/5",
+        "interval": "6th"
+    },
+   
+    "23":
+    {
+        "root": "C",
+        "rootnote": "c/4",
+        "questionnote": "ab/4",
+        "interval": "m6th"
+    },
+    "24":
+    {
+        "root": "C#",
+        "rootnote": "c#/4",
+        "questionnote": "a/4",
+        "interval": "m6th"
+    },
+    "25":
+    {
+        "root": "D",
+        "rootnote": "d/4",
+        "questionnote": "bb/4",
+        "interval": "m6th"
+    },
+    "26":
+    {
+        "root": "Eb",
+        "rootnote": "eb/4",
+        "questionnote": "b/4",
+        "interval": "m6th"
+    },
+    "27":
+    {
+        "root": "E",
+        "rootnote": "e/4",
+        "questionnote": "c/5",
+        "interval": "m6th"
+    },
+    "28":
+    {
+        "root": "F",
+        "rootnote": "f/4",
+        "questionnote": "db/5",
+        "interval": "m6th"
+    },
+    "29":
+    {
+        "root": "F#",
+        "rootnote": "f#/4",
+        "questionnote": "d/5",
+        "interval": "m6th"
+    },
+    "30":
+    {
+        "root": "G",
+        "rootnote": "g/4",
+        "questionnote": "eb/5",
+        "interval": "m6th"
+    },
+    "31":
+    {
+        "root": "Ab",
+        "rootnote": "ab/4",
+        "questionnote": "e/5",
+        "interval": "m6th"
+    },
+    "32":
+    {
+        "root": "A",
+        "rootnote": "a/4",
+        "questionnote": "f/5",
+        "interval": "m6th"
+    },
+    "33":
+    {
+        "root": "Bb",
+        "rootnote": "bb/4",
+        "questionnote": "gb/5",
+        "interval": "m6th"
+    },
+    "34":
+    {
+        "root": "B",
+        "rootnote": "b/4",
+        "questionnote": "g/5",
+        "interval": "m6th"
+    }, 
+    "35":
+    {
+        "root": "C",
+        "rootnote": "c/5",
+        "questionnote": "ab/5",
+        "interval": "m6th"
+    },
+    "36":
+    {
+        "root": "C#",
+        "rootnote": "c#/5",
+        "questionnote": "a/5",
+        "interval": "m6th"
+    },
+    "37":
+    {
+        "root": "D",
+        "rootnote": "d/5",
+        "questionnote": "bb/5",
+        "interval": "m6th"
+    },
+    "38":
+    {
+        "root": "Eb",
+        "rootnote": "eb/5",
+        "questionnote": "b/5",
+        "interval": "m6th"
+    }
+}

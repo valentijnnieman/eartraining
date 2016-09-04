@@ -1,0 +1,117 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.hero
+  background: #013e75
+  background: -moz-linear-gradient(left,  #013e75 0%, #00203c 100%)
+  background: -webkit-linear-gradient(left,  #013e75 0%,#00203c 100%)
+  background: linear-gradient(to right,  #013e75 0%,#00203c 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#013e75', endColorstr='#00203c',GradientType=1 )
+  background-size: cover
+  padding: 4rem 0 4rem 0
+  @media screen and (min-width: 720px)
+    padding: 8rem 0 2.4rem 0
+  &--fashion
+    background: -moz-linear-gradient(to right,  rgba(1, 117, 18, 0.85) 0%, rgba(0, 32, 60, 0.85) 100%), image-url("home/hero_image1.jpg") repeat center
+    background: -webkit-linear-gradient(to right,  rgba(1, 117, 18, 0.85) 0%, rgba(0, 32, 60, 0.85) 100%), image-url("home/hero_image1.jpg") repeat center
+    background: linear-gradient(to right,  rgba(1, 117, 18, 0.85) 0%, rgba(0, 32, 60, 0.85) 100%), image-url("home/hero_image1.jpg") repeat center
+    background-size: 100% 
+    height: 60vh
+    width: 100%
+    position: fixed
+    top: 0
+    z-index: -1
+    background-position-y: 80%
+
+.hero__header
+  font-family: "Open Sans", Helvetica Neue, Arial
+  text-align: center
+  font-weight: 200
+  color: white
+  margin-bottom: 0.3rem
+  font-size: 2rem
+  @media screen and (min-width: 720px)
+    font-size: 3rem
+.hero__subheader
+  font-family: "Open Sans", Helvetica Neue, Arial
+  text-align: center
+  font-weight: 200
+  font-style: italic
+  color: white
+  margin-bottom: 2.5rem
+  font-size: 1.25rem
+  // line-height: 1.8rem
+  @media screen and (min-width: 720px)
+    font-size: 1.7rem
+.hero__tagline
+  font-family: 'Open Sans', Helvetica Neue, Arial
+  text-align: center
+  color: white
+  font-size: 16px
+  a
+    color: white
+    text-decoration: underline
+
+.feature_grid
+  background-color: dark-gray
+  padding: 3rem 0rem 3rem
+  border-bottom: 1px solid #e4e4e4 
+  margin-top: 60vh
+  background-color: white
+.feature_block
+  display: block
+  margin: 0 auto
+  &:last-child
+    border-right: none
+  border-right: 1px solid #e4e4e4
+.feature_block__image
+  display: block
+  width: 70px
+  height: 70px
+  background-size: cover
+  margin: auto
+.feature_block__image--lessons
+  background-image: image-url('home/icons/mortarboard.svg')
+.feature_block__image--exercises
+  background-image: image-url('home/icons/open-book.svg')
+.feature_block__image--training
+  background-image: image-url('home/icons/books.svg')
+.feature_block__header
+  display: block
+  font-weight: light
+  font-size: 16px
+  text-align: center
+.feature_block__subheader
+  text-align: center
+  font-size: 12px
+  font-weight: light
+  
+.feature_showcase
+  padding: 4rem 0rem 4rem
+  background-color: #252424 
+  &:last-child
+    border-right: none
+    background-color: red
+.feature_showcase__img
+  width: 600px
+  height: 400px
+  background-size: cover
+  margin: auto
+.feature_showcase__img--product
+  background-image: image-url('home/product_screen.png')
+.feature_showcase__header
+  text-align: center
+  color: white
+  font-weight: 300
+.register_button
+  border: 1px solid gray !important
+  border-radius: 18px !important
+  background-color: rgba(0,0,0,0) !important
+  font-size: 16px !important
+  width: 13% !important
+  display: block !important
+  margin: auto !important
+
+.white_blocker
+  background-color: white
+  height: 200px

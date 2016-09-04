@@ -1,0 +1,53 @@
+.hero.hero--fashion
+  .row
+    .small-12.columns
+  .row
+    .small-12.medium-10.medium-centered.columns
+      %h1.hero__header Welcome to Ear Training
+  .row
+    .small-12.medium-10.medium-centered.columns
+      %h4.hero__subheader Learn music theory by listening
+  .row
+    .small-12.medium-10.medium-centered.columns
+      = link_to new_user_registration_url do
+        .button.register_button Sign up
+      = link_to new_user_session_url do
+        .button.register_button Log in
+
+.feature_grid
+  .row.align-center
+    .small-4.columns.feature_block
+      .feature_block__image.feature_block__image--lessons
+      .feature_block__header
+        Lessons
+      .feature_block__subheader
+        that teach you music theory
+    .small-4.columns.feature_block
+      .feature_block__image.feature_block__image--exercises
+      .feature_block__header
+        Exercises 
+      .feature_block__subheader
+        that help you learn
+    .small-4.columns.feature_block
+      .feature_block__image.feature_block__image--training
+      .feature_block__header
+        Training 
+      .feature_block__subheader
+        that makes you better
+        
+.feature_showcase
+  .row
+    .small-12.columns
+      .feature_showcase__img.feature_showcase__img--product
+  .row
+    .small-12.columns
+      %h3.feature_showcase__header Sign up now to get access to unlimited solfège exercises! 
+  .row
+    .small-12.medium-10.medium-centered.columns
+      = link_to new_user_registration_url do
+        .button.register_button Sign up
+      = link_to new_user_session_url do
+        .button.register_button Log in
+
+// keeps the background from showing through at the bottom
+.white_blocker
