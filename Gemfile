@@ -20,7 +20,6 @@ gem 'devise'
 # HAML for views!
 gem 'haml-rails'
 
-# Foundation for cool looks!
 gem 'foundation-rails'
 
 # Use jquery as the JavaScript library

@@ -1,168 +1,32 @@
-!!!
-%html{"ng-app" => "eartraining"}
-  %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Ear Training 0.0.3
-    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
-    %link{:href => "./dependencies/bootstrap-3.3.5-dist/css/bootstrap.min.css", :rel => "stylesheet"}/
-    %link{:href => "./css/style.css", :rel => "stylesheet"}/
-    %link{:href => "./css/list_input.css", :rel => "stylesheet"}/
-    / Dependencies
-    %script{:src => "./dependencies/jquery-2.1.4.min.js"}
-    %script{:src => "./dependencies/vexflow-master/releases/vexflow-debug.js"}
-    %script{:src => "./dependencies/vexflow-master/releases/vexflow-min.js"}
-    %script{:src => "./dependencies/bootstrap-3.3.5-dist/js/bootstrap.min.js"}
-    %script{:src => "./dependencies/angular.min.js"}
-    / Source
-    %script{:src => "./js/notes.js"}
-    %script{:src => "./js/main.js"}
-    %script{:src => "./js/question.js"}
-    %script{:src => "./js/exercise_async.js"}
-  %body
-    .container.exercise-controls{"ng-controller" => "exerciseController"}
-      / Main Exercise Window
-      .row
-        .col-sm-12
-          .menu-bar{"ng-init" => "menu_dropdown=true"}
-            %h3 Ear Training
-            .box-shadow-menu{"ng-click" => "menu_dropdown=!menu_dropdown", "ng-model" => "menu_dropdown", :style => "display: none;"}
-            .exercise-menu{"ng-show" => "menu_dropdown"}
-              .btn-group
-                .btn-group
-                  %button.btn.btn-menu.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
-                    Up
-                    %span.caret
-                  %ul.dropdown-menu{:role => "menu"}
-                    %li
-                      %a{:href => "#", "ng-click" => "loadExercise(\"seconds\")"} Minor and Major 2ths
-                    %li
-                      %a{:href => "#", "ng-click" => "loadExercise(\"thirds\")"} Minor and Major 3ths
-                    %li
-                      %a{:href => "#", "ng-click" => "loadExercise(\"fourthsfifths\")"} 4ths and 5ths
-                    %li
-                      %a{:href => "#", "ng-click" => "loadExercise(\"sixths\")"} Minor and Major 6ths
-                    %li
-                      %a{:href => "#", "ng-click" => "loadExercise(\"sevenths\")"} Minor and Major 7ths
-                    %li
-                      %a{:href => "#", "ng-click" => "loadExercise(\"all\")"} All Intervals
-                .btn-group
-                  %button.btn.btn-menu.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
-                    Down
-                    %span.caret
-                  %ul.dropdown-menu{:role => "menu"}
-                    %li
-                      %a{:href => "#", "ng-click" => "loadExercise(\"seconds\", true)"} Minor and Major 2ths
-                    %li
-                      %a{:href => "#", "ng-click" => "loadExercise(\"thirds\", true)"} Minor and Major 3ths
-                    %li
-                      %a{:href => "#", "ng-click" => "loadExercise(\"fourthsfifths\", true)"} 4ths and 5ths
-                    %li
-                      %a{:href => "#", "ng-click" => "loadExercise(\"sixths\", true)"} Minor and Major 6ths
-                    %li
-                      %a{:href => "#", "ng-click" => "loadExercise(\"sevenths\", true)"} Minor and Major 7ths
-                    %li
-                      %a{:href => "#", "ng-click" => "loadExercise(\"all\", true)"} All Intervals
-                .btn-group
-                  %button.btn.btn-menu.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
-                    Harmonic
-                    %span.caret
-                  %ul.dropdown-menu{:role => "menu"}
-                    %li
-                      %a{:href => "#"} Coming soon!
-                .btn-group
-                  %button.btn.btn-menu.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
-                    Chords
-                    %span.caret
-                  %ul.dropdown-menu{:role => "menu"}
-                    %li
-                      %a{:href => "#"} Coming soon!
-      .row
-        .col-sm-12.col-md-4.exercise-block
-          .row
-            .col-sm-12
-              %h2
-                {{exerciseName}}
-          .row
-            .col-sm-12
-              %small Question {{ currentQuestion+1 }} of {{ numberOfQuestions }}
-              %button.btn.btn-sm.btn-default{"ng-click" => "setMaxQuestions(10)"} 10
-              %button.btn.btn-sm.btn-default{"ng-click" => "setMaxQuestions(20)"} 20
-              %button.btn.btn-sm.btn-default{"ng-click" => "setMaxQuestions(30)"} 30
-              %button.btn.btn-menu{"ng-click" => "restartExercise()", :type => "button"} Restart Exercise
-              #progress-tracking
-                #answers-display
-                  .label.label-danger {{wrongAnswers}}
-                  .label.label-success {{rightAnswers}}
-                .progress
-                  .progress-bar.progress-bar-danger{"ng-style" => "{'width': wrongPercentage}"} {{displayWrongPercentage}}%
-                  .progress-bar.progress-bar-success{"ng-style" => "{'width': rightPercentage}"} {{displayRightPercentage}}%
-          .row
-            .col-sm-12
-              %div{"ng-class" => "messageClass"} {{message}}
-          .row
-            .col-sm-12
-              .canvas-wrapper
-                %canvas#display-notes{:height => "84", :width => "360"}
-                .soundTimeline
-                  .playbar
-                  %button#playbutton{:button => "", "ng-class" => "btn btn-info", "ng-click" => "playQuestion()", :type => "button"}
-              %button.btn.next-button.btn-info{"ng-class" => "nextClass", "ng-click" => "nextQuestion()", :type => "button"} Next
-          .row
-            .col-sm-12
-              %h2{:style => "text-align:center;"} Select Interval
-          .row
-            .col-sm-12
-              %ul.input-circle
-                %li#circle-slice--one.input-circle-slice
-                  #slice-content--one.input-circle-slice__content
-                    %button.answer-btn{"ng-class" => "{'btn btn-warning': success!='1th', 'btn btn-success': success=='1th', 'btn btn-danger': failed=='1th'}", "ng-click" => "giveAnswer(\"1th\")"} unison
-                %li#circle-slice--two.input-circle-slice
-                  #slice-content--two.input-circle-slice__content
-                    %button.answer-btn{"ng-class" => "{'btn btn-warning': success!='m2nd', 'btn btn-success': success=='m2nd', 'btn btn-danger': failed=='m2nd'}", "ng-click" => "giveAnswer(\"m2nd\")"} minor 2nd
-                    %button.answer-btn.answer-btn--lower{"ng-class" => "{'btn btn-warning': success!='2nd', 'btn btn-success': success=='2nd', 'btn btn-danger': failed=='2nd'}", "ng-click" => "giveAnswer(\"2nd\")"} Major 2nd
-                %li#circle-slice--three.input-circle-slice
-                  #slice-content--three.input-circle-slice__content
-                    %button.answer-btn{"ng-class" => "{'btn btn-warning': success!='m3th', 'btn btn-success': success=='m3th', 'btn btn-danger': failed=='m3th'}", "ng-click" => "giveAnswer(\"m3th\")"} minor 3th
-                    %button.answer-btn.answer-btn--lower{"ng-class" => "{'btn btn-warning': success!='3th', 'btn btn-success': success=='3th', 'btn btn-danger': failed=='3th'}", "ng-click" => "giveAnswer(\"3th\")"} Major 3th
-                %li#circle-slice--four.input-circle-slice
-                  #slice-content--four.input-circle-slice__content
-                    %button.answer-btn{"ng-class" => "{'btn btn-warning': success!='4th', 'btn btn-success': success=='4th', 'btn btn-danger': failed=='4th'}", "ng-click" => "giveAnswer(\"4th\")"} Perfect 4th
-                    %button.answer-btn.answer-btn--lower{"ng-class" => "{'btn btn-warning': success!='m5th', 'btn btn-success': success=='m5th', 'btn btn-danger': failed=='m5th'}", "ng-click" => "giveAnswer(\"m5th\")"} Tritone
-                    %button.answer-btn.answer-btn--lower{"ng-class" => "{'btn btn-warning': success!='5th', 'btn btn-success': success=='5th', 'btn btn-danger': failed=='5th'}", "ng-click" => "giveAnswer(\"5th\")"} Perfect 5th
-                %li#circle-slice--six.input-circle-slice
-                  #slice-content--six.input-circle-slice__content
-                    %button.answer-btn{"ng-class" => "{'btn btn-warning': success!='m6th', 'btn btn-success': success=='m6th', 'btn btn-danger': failed=='m6th'}", "ng-click" => "giveAnswer(\"m6th\")"} minor 6th
-                    %button.answer-btn.answer-btn--lower{"ng-class" => "{'btn btn-warning': success!='6th', 'btn btn-success': success=='6th', 'btn btn-danger': failed=='6th'}", "ng-click" => "giveAnswer(\"6th\")"} Major 6th
-                %li#circle-slice--seven.input-circle-slice
-                  #slice-content--seven.input-circle-slice__content
-                    %button.answer-btn{"ng-class" => "{'btn btn-warning': success!='m7th', 'btn btn-success': success=='m7th', 'btn btn-danger': failed=='m7th'}", "ng-click" => "giveAnswer(\"m7th\")"} minor 7th
-                    %button.answer-btn.answer-btn--lower{"ng-class" => "{'btn btn-warning': success!='7th', 'btn btn-success': success=='7th', 'btn btn-danger': failed=='7th'}", "ng-click" => "giveAnswer(\"7th\")"} Major 7th
-                %li#circle-slice--eight.input-circle-slice
-                  #slice-content--eight.input-circle-slice__content
-                    %button.answer-btn{"ng-class" => "{'btn btn-warning': success!='8th', 'btn btn-success': success=='8th', 'btn btn-danger': failed=='8th'}", "ng-click" => "giveAnswer(\"8th\")"} Octave
-        .col-sm-12.col-md-8.input-block{:style => "background-color:#505050"}
-      /
-        <div class='row'>
-        <div class='col-sm-12'>
-        <button class="btn btn-menu" ng-click='togglePiano()'>Hide/Show Piano</button>
-        <ul id="piano" ng-show='showPiano'>
-        <li><div class="anchor"></div></li>
-        <li><div class="anchor"></div><span></span></li>
-        <li><div class="anchor"></div><span></span></li>
-        <li><div class="anchor"></div></li>
-        <li><div class="anchor"></div><span></span></li>
-        <li><div class="anchor"></div><span></span></li>
-        <li><div class="anchor"></div><span></span></li>
-        <li><div class="anchor"></div></li>
-        <li><div class="anchor"></div><span></span></li>
-        <li><div class="anchor"></div><span></span></li>
-        <li><div class="anchor"></div></li>
-        <li><div class="anchor"></div><span></span></li>
-        <li><div class="anchor"></div><span></span></li>
-        <li><div class="anchor"></div><span></span></li>
-        <li><div class="anchor"></div></li>
-        <li><div class="anchor"></div><span></span></li>
-        <li><div class="anchor"></div><span></span></li>
-        </ul>
-        </div>
-        </div>
+%head 
+
+%body
+  %h1
+    Exercise 1
+  .myPanel
+
+  :javascript
+    var notes = {
+      "key": "C",
+      "type": "interval",
+      "sound": "piano",
+      "difficulty": "easy",
+      "all_notes": [
+        { "key": "c/4", "duration" :"q" },
+        { "key": "d/4", "duration" :"q" }
+      ]
+    }
+
+    var myPanel = document.getElementsByClassName('myPanel')[0]
+    var mySnippet = new Snippet(notes, myPanel)
+    mySnippet.render()
+    mySnippet.render()
+    mySnippet.render()
+    mySnippet.render()
+    mySnippet.render()
+    mySnippet.render()
+    mySnippet.render()
+    mySnippet.render()
+    mySnippet.render()
+    mySnippet.render()
+    mySnippet.render()

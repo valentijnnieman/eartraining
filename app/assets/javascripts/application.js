@@ -11,9 +11,12 @@
 // about supported directives.
 //
 //= require jquery
+//= require angular.min
 //= require jquery_ujs
 //= require foundation
+//= require vexflow-min
 //= require turbolinks
 //= require_tree .
+
 
 $(function(){ $(document).foundation(); });

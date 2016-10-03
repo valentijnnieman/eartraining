@@ -10,4 +10,3 @@ $(document).ready ->
     $('.hero').animate {
       backgroundPositionY: y+'%'
     }, 0, ->
-      console.log("done")
