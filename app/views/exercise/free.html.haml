@@ -1,56 +1,9 @@
 %head 
 
 %body
-  .row
-    .small-12.columns
-      %h1
-        Exercise 1
-  .snippet
-    .row
-      .small-12.columns
-        .snippet__title
-          Listen to the interval and answer below
-  .row
-    .small-12.columns
-      .snippet__container
-        .myPanel
-  .row
-    .small-12.columns
-      .answer_input
-        %ul.answer_input__menu
-          %li 1st
-          %li m2nd
-          %li 2nd
+  .exercise_container#exercises
+
+  = render 'exercise/shared/sidebar'
 
   :javascript
-    var notes = {
-      "key": "C",
-      "type": "interval",
-      "instrument": "piano",
-      "difficulty": "easy",
-      "all_notes": [
-        { "key": "c/4", "duration" :"q" },
-        { "key": "d/4", "duration" :"q" }
-      ],
-      "speed": "1000"
-    }
-    var simpleNotes = {
-      "key": "C",
-      "type": "interval",
-      "instrument": "sine",
-      "difficulty": "easy",
-      "all_notes": [
-        { "key": "c/4", "duration" :"q" },
-        { "key": "e/4", "duration" :"q" }
-      ]
-    }
 
-    var myPanel = document.getElementsByClassName('myPanel')[0]
-    var mySnippet = new Snippet(notes, myPanel)
-    mySnippet.render()
-
-    $(document).ready(function () {
-      $('.myPanel').on('click', function() {
-        mySnippet.play();
-      });
-    });

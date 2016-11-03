@@ -13,9 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
-//= require vexflow-min
 //= require turbolinks
-//= require_tree .
+//= require_directory .
 
 
 $(function(){ $(document).foundation(); });

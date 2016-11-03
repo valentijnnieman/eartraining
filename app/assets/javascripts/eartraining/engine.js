@@ -23,3 +23,5 @@ var AudioEngine = ( function() {
 
   return AudioEngine;
 })();
+
+module.exports = AudioEngine;

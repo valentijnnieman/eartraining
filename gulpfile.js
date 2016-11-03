@@ -1,16 +1,29 @@
 var gulp = require('gulp');
+var browserify = require('browserify');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var ngAnnotate = require('gulp-ng-annotate');
+var source = require('vinyl-source-stream');
+var babelify = require('babelify');
+
 
 gulp.task('scripts', function() {
-  gulp.src('app/assets/javascripts/main/*.js')
-    .pipe(concat('eartraining.min.js'))
-    .pipe(ngAnnotate())
-    .pipe(uglify({mangle: false}))
+  //gulp.src('app/assets/javascripts/eartraining/*.js')
+    //.pipe(concat('eartraining.min.js'))
+    //.pipe(gulp.dest('app/assets/javascripts/'))
+});
+
+gulp.task('browserify', function() {
+  return browserify('app/assets/javascripts/eartraining/eartraining.js')
+    .transform(babelify)
+    .bundle()
+    .pipe(source('bundle.js'))
+    //.pipe(uglify({mangle: false}))
     .pipe(gulp.dest('app/assets/javascripts/'))
 });
 
+gulp.task('default', function () {
+  gulp.run('scripts', 'browserify');
+});
 gulp.task('watch', function () {
-  gulp.watch('app/assets/javascripts/main/*.js', ['scripts']);
+  gulp.watch('app/assets/javascripts/eartraining/*.js', ['browserify']);
 });
