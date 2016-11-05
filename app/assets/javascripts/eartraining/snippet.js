@@ -1,4 +1,4 @@
-// Snippets are objects holding a single 'piece of music',
+  // Snippets are objects holding a single 'piece of music',
 // like an interval or a chord progression.
 
 var Vex = require('vexflow');
@@ -31,18 +31,20 @@ var Snippet = function(notes, element, count) {
         <div class='row'>
           <div class='small-12 columns'>
             <div class='snippet__container'>
-              <div class='snippet__canvas' id='canvas-` + this.count + `'></div>
+              <div class='snippet__canvas' id='canvas-${this.count}'></div>
+
+              <div class='snippet__canvas' id='canvas-${this.count}'></div>
             </div>
           </div>
-          <button class='button small radius' id='play-` + this.count + `'>play</button>
+          <button class='button small radius' id='play-${this.count}'>play</button>
         </div>
         <div class='row'>
           <div class='small-12 columns'>
             <div class='answer_input'>
               <ul class='answer_input__menu'>
-                <li> 1st
-                <li> 2nd
-                <li> 3th
+                <li> 1st </li>
+                <li> 2nd </li>
+                <li> 3th </li>
               </ul>
             </div>
           </div>
@@ -58,7 +60,6 @@ Snippet.prototype.render = function(){
   var c = document.createElement("div");
   this.element.insertAdjacentHTML('beforeend', this.html_elements);
   var b = document.getElementById('play-' + this.count);
-  this.play()
   var that = this
   b.addEventListener('click', function() {
     that.play()  

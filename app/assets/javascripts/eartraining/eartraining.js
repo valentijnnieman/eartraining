@@ -3,7 +3,6 @@ var Snippet = require('./snippet.js')
 console.log(Snippet.notes)
 
 var notes = {
-  "id": "1",
   "key": "C",
   "type": "interval",
   "instrument": "piano",
@@ -14,8 +13,18 @@ var notes = {
   ],
   "speed": "1000"
 }
+var notes2 = {
+  "key": "D",
+  "type": "interval",
+  "instrument": "piano",
+  "difficulty": "easy",
+  "all_notes": [
+    { "key": "d/4", "duration" :"q" },
+    { "key": "f#/4", "duration" :"q" }
+  ],
+  "speed": "1000"
+}
 var simpleNotes = {
-  "id": "1",
   "key": "C",
   "type": "interval",
   "instrument": "sine",
@@ -23,14 +32,17 @@ var simpleNotes = {
   "all_notes": [
     { "key": "c/4", "duration" :"q" },
     { "key": "e/4", "duration" :"q" }
-  ]
+  ],
+  "speed": "1000"
 }
 
 window.onload = function () {
   var myPanel = document.getElementById('exercises')
-  var snippets = [6]
-  for(var i = 0; i < 6; i++) {
-    snippets[i] = new Snippet(notes, myPanel, i)
-    snippets[i].render()
-  }
+  var snippets = [1]
+  snippets[0] = new Snippet(notes, myPanel, 0)
+  snippets[0].render()
+  snippets[1] = new Snippet(simpleNotes, myPanel, 1)
+  snippets[1].render()
+  snippets[2] = new Snippet(notes2, myPanel, 2)
+  snippets[2].render()
 }
