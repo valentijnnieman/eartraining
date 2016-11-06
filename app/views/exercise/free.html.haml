@@ -1,9 +1,11 @@
 %head 
 
 %body
-  .exercise_container#exercises
+  .row
+    = render 'exercise/shared/sidebar'
+    .small-12.columns
+      .exercise_container#exercises
 
-  = render 'exercise/shared/sidebar'
 
   :javascript
 
