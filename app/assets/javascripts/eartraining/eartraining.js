@@ -45,4 +45,8 @@ window.onload = function () {
   snippets[1].render()
   snippets[2] = new Snippet(notes2, myPanel, 2)
   snippets[2].render()
+  snippets[3] = new Snippet(notes2, myPanel, 3)
+  snippets[3].render()
+  snippets[4] = new Snippet(notes2, myPanel, 4)
+  snippets[4].render()
 }

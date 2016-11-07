@@ -3,12 +3,51 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 // @import url(https://fonts.googleapis.com/css?family=Bree+Serif)
 
+
+// 120 x 16 = 1920
+// sidebar: 15 x 16
 .exercise_container 
-  position: relative
-  left: 7rem
+  position: absolute 
+  left: 240px
 
 .snippet
   padding: 8px
   border: 1px solid $border-color
   box-shadow: 1px 1px 1px $border-color 
   display: inline-block
+  width: 352px
+  margin-left: 8px
+  float: left
+
+  &__container
+    display: inline-block
+
+  &__canvas
+    display: inline-block
+    float: left
+    border: 1px solid $border-color
+    box-shadow: 1px 1px 1px $border-color 
+  &__controls, &__monitor
+    display: inline-block
+    border: 1px solid $border-color
+    width: 80px
+    height: 42px
+    float: left
+    position: relative
+    top: 31px
+    margin-left: 2px
+    box-shadow: 1px 1px 1px $border-color 
+    &--small
+      position: initial 
+  &__playbar
+    display: inline-block
+    border: 1px solid $border-color
+    width: 149px
+    margin-left: 2px
+    height: 34px
+    float: left
+    box-shadow: 1px 1px 1px $border-color 
+
+  &__play
+    display: inline-block
+    float: left

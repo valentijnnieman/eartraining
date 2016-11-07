@@ -37,6 +37,10 @@ window.onload = function () {
   snippets[1].render();
   snippets[2] = new Snippet(notes2, myPanel, 2);
   snippets[2].render();
+  snippets[3] = new Snippet(notes2, myPanel, 3);
+  snippets[3].render();
+  snippets[4] = new Snippet(notes2, myPanel, 4);
+  snippets[4].render();
 };
 
 },{"./snippet.js":3}],2:[function(require,module,exports){
@@ -82,8 +86,8 @@ var Snippet = function (notes, element, count) {
   this.synth = new Synth(this.notes.instrument);
 
   this.canvas = document.createElement('canvas');
-  this.canvas.width = 180;
-  this.canvas.height = 92;
+  this.canvas.width = 208;
+  this.canvas.height = 80;
   this.renderer = new Vex.Flow.Renderer(this.canvas, Vex.Flow.Renderer.Backends.CANVAS);
   this.vexCtx = this.renderer.getContext();
 
@@ -98,10 +102,13 @@ var Snippet = function (notes, element, count) {
         <div class='small-12 columns'>
           <div class='snippet__container'>
             <div class='snippet__canvas' id='canvas-${ this.count }'></div>
-
-            <div class='snippet__canvas' id='canvas-${ this.count }'></div>
+            <div class='snippet__controls' id='controls-${ this.count }'></div>
           </div>
-          <button class='button small radius' id='play-${ this.count }'>play</button>
+          <div class='snippet__container'>
+            <button class='snippet__play button small radius' id='play-${ this.count }'>play</button>
+            <div class='snippet__playbar' id='playbar-${ this.count }'></div>
+            <div class='snippet__monitor snippet__monitor--small' id='monitor-${ this.count }'></div>
+          </div>
         </div>
       </div>
       <div class='row'>
@@ -131,7 +138,7 @@ Snippet.prototype.render = function () {
   var c = document.getElementById('canvas-' + this.count);
   c.appendChild(this.canvas);
 
-  var stave = new Vex.Flow.Stave(0, -8, 200);
+  var stave = new Vex.Flow.Stave(8, -16, 191);
   stave.addClef("treble").addKeySignature(this.notes.key).setContext(this.vexCtx).draw();
 
   var voice = new Vex.Flow.Voice({
@@ -147,7 +154,7 @@ Snippet.prototype.render = function () {
   }
 
   voice.addTickables(notesToDraw);
-  formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 200);
+  formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 120);
   voice.draw(this.vexCtx, stave);
 };
 
