@@ -101,13 +101,15 @@ var Snippet = function (notes, element, count) {
       <div class='row'>
         <div class='small-12 columns'>
           <div class='snippet__container'>
-            <div class='snippet__canvas' id='canvas-${ this.count }'></div>
-            <div class='snippet__controls' id='controls-${ this.count }'></div>
+            <div class='snippet__canvas' id='canvas-${ this.count }'><div class='snippet__playbar'></div></div>
+            <div class='snippet__section' id='controls-${ this.count }'>
+              <input type='range' class='controls__gain'></input>
+            </div>
           </div>
           <div class='snippet__container'>
             <button class='snippet__play button small radius' id='play-${ this.count }'>play</button>
-            <div class='snippet__playbar' id='playbar-${ this.count }'></div>
-            <div class='snippet__monitor snippet__monitor--small' id='monitor-${ this.count }'></div>
+            <div class='snippet__section snippet__section--small snippet__section--wide' id='playbar-${ this.count }'></div>
+            <div class='snippet__section snippet__section--small' id='monitor-${ this.count }'></div>
           </div>
         </div>
       </div>

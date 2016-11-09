@@ -17,6 +17,7 @@
   display: inline-block
   width: 352px
   margin-left: 8px
+  margin-bottom: 8px
   float: left
 
   &__container
@@ -27,27 +28,34 @@
     float: left
     border: 1px solid $border-color
     box-shadow: 1px 1px 1px $border-color 
-  &__controls, &__monitor
+  &__playbar
+    height: 100%
+    width: 1px
+    background-color: $border-color
+
+  &__section
     display: inline-block
     border: 1px solid $border-color
     width: 80px
-    height: 42px
+    height: 88px
     float: left
-    position: relative
-    top: 31px
-    margin-left: 2px
+    margin-left: 8px
+    padding: 8px
     box-shadow: 1px 1px 1px $border-color 
     &--small
-      position: initial 
-  &__playbar
-    display: inline-block
-    border: 1px solid $border-color
-    width: 149px
-    margin-left: 2px
-    height: 34px
-    float: left
-    box-shadow: 1px 1px 1px $border-color 
+      height: 34px 
+    &--wide
+      width: 154px
 
   &__play
     display: inline-block
     float: left
+
+.controls
+  
+  &__gain
+    display: block
+    height: 62px
+    width: 2px
+    margin: auto
+    -webkit-appearance: slider-vertical
