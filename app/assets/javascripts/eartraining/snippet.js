@@ -3,6 +3,7 @@
 
 var Vex = require('vexflow');
 var Synth = require('./synth.js');
+var AudioEngine = require('./engine.js')
 
 var Snippet = function(notes, element, count) {
   this.notes = notes;
@@ -11,10 +12,14 @@ var Snippet = function(notes, element, count) {
   this.element = element; // TO-DO: Delete after HTML member has been made
   this.synth = new Synth(this.notes.instrument); 
 
-  this.canvas = document.createElement('canvas')
-  this.canvas.width = 208
-  this.canvas.height = 80
-  this.renderer = new Vex.Flow.Renderer(this.canvas,
+  this.sheet = document.createElement('canvas')
+  this.sheet.width = 208
+  this.sheet.height = 80
+  this.monitor = document.createElement('canvas')
+  this.monitor.width = 88
+  this.monitor.height = 34
+  this.monitor_data = new Uint8Array(AudioEngine.getAnalyser().frequencyBinCount);
+  this.renderer = new Vex.Flow.Renderer(this.sheet,
     Vex.Flow.Renderer.Backends.CANVAS);
   this.vexCtx = this.renderer.getContext();
 
@@ -28,15 +33,18 @@ var Snippet = function(notes, element, count) {
       <div class='row'>
         <div class='small-12 columns'>
           <div class='snippet__container'>
-            <div class='snippet__canvas' id='canvas-${this.count}'><div class='snippet__playbar'></div></div>
+            <div class='snippet__canvas-container' id='sheet-${this.count}'><div class='snippet__playbar'></div></div>
             <div class='snippet__section' id='controls-${this.count}'>
-              <input type='range' class='controls__gain'></input>
+              <input type='range' id='gain' class='controls__slider'></input>
+              <input type='range' id='type' class='controls__slider'></input>
             </div>
           </div>
           <div class='snippet__container'>
             <button class='snippet__play button small radius' id='play-${this.count}'>play</button>
             <div class='snippet__section snippet__section--small snippet__section--wide' id='playbar-${this.count}'></div>
-            <div class='snippet__section snippet__section--small' id='monitor-${this.count}'></div>
+            <div class='snippet__section snippet__section--small' id='monitor-${this.count}'>
+              <div class='snippet__canvas-container' id='monitor-canvas-${this.count}'></div>
+            </div>
           </div>
         </div>
       </div>
@@ -58,15 +66,16 @@ var Snippet = function(notes, element, count) {
 
 Snippet.prototype.render = function(){
   console.log('render ' + this.test);
-  var c = document.createElement("div");
   this.element.insertAdjacentHTML('beforeend', this.html_elements);
   var b = document.getElementById('play-' + this.count);
   var that = this
   b.addEventListener('click', function() {
     that.play()  
   })
-  var c = document.getElementById('canvas-' + this.count);
-  c.appendChild(this.canvas);
+  var sheetElement = document.getElementById('sheet-' + this.count);
+  var monitorElement = document.getElementById('monitor-canvas-' + this.count);
+  sheetElement.appendChild(this.sheet);
+  monitorElement.appendChild(this.monitor);
 
   var stave = new Vex.Flow.Stave(8, -16, 191);
   stave.addClef("treble").addKeySignature(this.notes.key).setContext(this.vexCtx).draw();
@@ -100,6 +109,21 @@ Snippet.prototype.play = function(){
       that.synth.playNote(that.notes.all_notes[1].key, 0.01, 0.2, 1.0, 0.8); 
     }, this.notes.speed);
   } 
+  this.monitor_frequencies('#3c0ec9');
+}
+
+Snippet.prototype.monitor_frequencies = function(fillColor) {
+  console.log(fillColor)
+  AudioEngine.getAnalyser().getByteFrequencyData(this.monitor_data); 
+  console.log(this.monitor_data);
+  var monitorContext = this.monitor.getContext('2d');
+
+  monitorContext.clearRect(0, 0, this.monitor.width, this.monitor.height);
+  monitorContext.fillStyle = fillColor;
+
+  for (var i = 0; i < this.monitor_data.length; i++) {
+    monitorContext.fillRect(i*3, 250 - this.monitor_data[i], 2, 325);
+  }
 }
 
 Snippet.prototype.solve = function(){

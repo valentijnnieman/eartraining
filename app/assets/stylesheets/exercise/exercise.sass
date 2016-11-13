@@ -23,7 +23,7 @@
   &__container
     display: inline-block
 
-  &__canvas
+  &__canvas-container
     display: inline-block
     float: left
     border: 1px solid $border-color
@@ -44,6 +44,7 @@
     box-shadow: 1px 1px 1px $border-color 
     &--small
       height: 34px 
+      padding: 0px
     &--wide
       width: 154px
 
@@ -53,9 +54,9 @@
 
 .controls
   
-  &__gain
-    display: block
+  &__slider
+    display: inline-block
     height: 62px
     width: 2px
-    margin: auto
+    margin: 0 8px 0px 8px
     -webkit-appearance: slider-vertical
