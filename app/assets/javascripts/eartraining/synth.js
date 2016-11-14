@@ -73,6 +73,10 @@ Synth.prototype.playNote = function(note, a, d, s, r){
   this.masterGain.gain.linearRampToValueAtTime(0, now + a + d + r);
 }
 
+Synth.prototype.connectToAnalyser = function(analyser) {
+  this.masterGain.connect(analyser)
+}
+
 var noteToFrequency = function(note) {
   switch(note)
   {

@@ -52,12 +52,6 @@ var AudioEngine = function () {
     var _context = new AudioContext();
     var _gain = _context.createGain();
     _gain.gain.value = 1.0;
-    var _analyser = _context.createAnalyser();
-
-    _gain.connect(_analyser);
-
-    _analyser.smoothingTimeConstant = 0.3;
-    _analyser.fftSize = 1024;
 
     console.log("Audio engine is running!");
   } catch (e) {
@@ -71,9 +65,6 @@ var AudioEngine = function () {
   };
   AudioEngine.getGain = function () {
     return _gain;
-  };
-  AudioEngine.getAnalyser = function () {
-    return _analyser;
   };
 
   return AudioEngine;
@@ -99,10 +90,14 @@ var Snippet = function (notes, element, count) {
   this.sheet = document.createElement('canvas');
   this.sheet.width = 208;
   this.sheet.height = 80;
+  this.analyser = AudioEngine.getContext().createAnalyser();
+  this.analyser.fftSize = 2048;
+  this.bufferLength = this.analyser.frequencyBinCount;
+  this.monitor_data = new Uint8Array(this.bufferLength);
+  this.analyser.getByteTimeDomainData(this.monitor_data);
   this.monitor = document.createElement('canvas');
   this.monitor.width = 88;
   this.monitor.height = 34;
-  this.monitor_data = new Uint8Array(AudioEngine.getAnalyser().frequencyBinCount);
   this.renderer = new Vex.Flow.Renderer(this.sheet, Vex.Flow.Renderer.Backends.CANVAS);
   this.vexCtx = this.renderer.getContext();
 
@@ -186,25 +181,54 @@ Snippet.prototype.play = function () {
   if (this.notes.type == 'interval') {
     var that = this;
     this.synth.playNote(this.notes.all_notes[0].key, 0.01, 0.2, 1.0, 0.8);
+    this.synth.connectToAnalyser(this.analyser);
     window.setTimeout(function () {
       that.synth.playNote(that.notes.all_notes[1].key, 0.01, 0.2, 1.0, 0.8);
     }, this.notes.speed);
   }
-  this.monitor_frequencies('#3c0ec9');
+  var monitorContext = this.monitor.getContext('2d');
+  this.monitor_frequencies(this.analyser, this.monitor_data, monitorContext, this.bufferLength, this.monitor.width, this.monitor.height);
 };
 
-Snippet.prototype.monitor_frequencies = function (fillColor) {
-  console.log(fillColor);
-  AudioEngine.getAnalyser().getByteFrequencyData(this.monitor_data);
-  console.log(this.monitor_data);
-  var monitorContext = this.monitor.getContext('2d');
+Snippet.prototype.monitor_frequencies = function (analyser, monitor_data, monitorContext, bufferLength, width, height) {
+  console.log(analyser);
 
-  monitorContext.clearRect(0, 0, this.monitor.width, this.monitor.height);
-  monitorContext.fillStyle = fillColor;
+  analyser.getByteTimeDomainData(monitor_data);
 
-  for (var i = 0; i < this.monitor_data.length; i++) {
-    monitorContext.fillRect(i * 3, 250 - this.monitor_data[i], 2, 325);
-  }
+  function draw() {
+    console.log('draw');
+    analyser.getByteTimeDomainData(monitor_data);
+    drawVisual = requestAnimationFrame(draw);
+    monitorContext.fillStyle = 'rgb(255, 255, 255)';
+    monitorContext.fillRect(0, 0, width, height);
+
+    monitorContext.lineWidth = 2;
+    monitorContext.strokeStyle = 'rgb(0, 0, 0)';
+
+    monitorContext.beginPath();
+
+    var sliceWidth = width * 1.0 / bufferLength;
+    var x = 0;
+
+    for (var i = 0; i < bufferLength; i++) {
+
+      var v = monitor_data[i] / 128.0;
+      var y = v * height / 2;
+
+      if (i === 0) {
+        monitorContext.moveTo(x, y);
+      } else {
+        monitorContext.lineTo(x, y);
+      }
+
+      x += sliceWidth;
+    }
+
+    monitorContext.lineTo(width, height / 2);
+    monitorContext.stroke();
+  };
+  draw();
+  cancelAnimationFrame(draw);
 };
 
 Snippet.prototype.solve = function () {
@@ -282,6 +306,10 @@ Synth.prototype.playNote = function (note, a, d, s, r) {
   this.masterGain.gain.setValueAtTime(0.0, now);
   this.masterGain.gain.linearRampToValueAtTime(1.0, now + a);
   this.masterGain.gain.linearRampToValueAtTime(0, now + a + d + r);
+};
+
+Synth.prototype.connectToAnalyser = function (analyser) {
+  this.masterGain.connect(analyser);
 };
 
 var noteToFrequency = function (note) {
