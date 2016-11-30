@@ -86,6 +86,7 @@ var Snippet = function (notes, element, count) {
   this.test = 'test!';
   this.element = element; // TO-DO: Delete after HTML member has been made
   this.synth = new Synth(this.notes.instrument);
+  console.log(this.synth.masterGain.gain);
 
   this.sheet = document.createElement('canvas');
   this.sheet.width = 208;
@@ -96,8 +97,8 @@ var Snippet = function (notes, element, count) {
   this.monitor_data = new Uint8Array(this.bufferLength);
   this.analyser.getByteTimeDomainData(this.monitor_data);
   this.monitor = document.createElement('canvas');
-  this.monitor.width = 88;
-  this.monitor.height = 34;
+  this.monitor.width = 78;
+  this.monitor.height = 25;
   this.renderer = new Vex.Flow.Renderer(this.sheet, Vex.Flow.Renderer.Backends.CANVAS);
   this.vexCtx = this.renderer.getContext();
 
@@ -113,7 +114,7 @@ var Snippet = function (notes, element, count) {
           <div class='snippet__container'>
             <div class='snippet__canvas-container' id='sheet-${ this.count }'><div class='snippet__playbar'></div></div>
             <div class='snippet__section' id='controls-${ this.count }'>
-              <input type='range' id='gain' class='controls__slider'></input>
+              <input type='range' id='gain-${ this.count }' class='controls__slider' value=${ this.synth.masterGain.gain }></input>
               <input type='range' id='type' class='controls__slider'></input>
             </div>
           </div>
@@ -141,13 +142,22 @@ var Snippet = function (notes, element, count) {
   `;
 };
 
+Snippet.prototype.set_volume = function (value) {
+  console.log(value / 100);
+  this.synth.volume.gain.value = value / 100;
+};
+
 Snippet.prototype.render = function () {
   console.log('render ' + this.test);
   this.element.insertAdjacentHTML('beforeend', this.html_elements);
   var b = document.getElementById('play-' + this.count);
+  var gain_input = document.getElementById('gain-' + this.count);
   var that = this;
   b.addEventListener('click', function () {
     that.play();
+  });
+  gain_input.addEventListener('input', function () {
+    that.set_volume(this.value);
   });
   var sheetElement = document.getElementById('sheet-' + this.count);
   var monitorElement = document.getElementById('monitor-canvas-' + this.count);
@@ -185,6 +195,9 @@ Snippet.prototype.play = function () {
     window.setTimeout(function () {
       that.synth.playNote(that.notes.all_notes[1].key, 0.01, 0.2, 1.0, 0.8);
     }, this.notes.speed);
+    window.setTimeout(function () {
+      cancelAnimationFrame(drawVisual);
+    }, this.notes.speed * 2);
   }
   var monitorContext = this.monitor.getContext('2d');
   this.monitor_frequencies(this.analyser, this.monitor_data, monitorContext, this.bufferLength, this.monitor.width, this.monitor.height);
@@ -202,8 +215,8 @@ Snippet.prototype.monitor_frequencies = function (analyser, monitor_data, monito
     monitorContext.fillStyle = 'rgb(255, 255, 255)';
     monitorContext.fillRect(0, 0, width, height);
 
-    monitorContext.lineWidth = 2;
-    monitorContext.strokeStyle = 'rgb(0, 0, 0)';
+    monitorContext.lineWidth = 0.5;
+    monitorContext.strokeStyle = 'rgb(66, 140, 244)';
 
     monitorContext.beginPath();
 
@@ -228,7 +241,6 @@ Snippet.prototype.monitor_frequencies = function (analyser, monitor_data, monito
     monitorContext.stroke();
   };
   draw();
-  cancelAnimationFrame(draw);
 };
 
 Snippet.prototype.solve = function () {
@@ -247,6 +259,7 @@ var Synth = function (instrument) {
   this.oscillators = [];
   this.gainNodes = [];
   this.masterGain;
+  this.volume;
 
   switch (instrument) {
     case 'piano':
@@ -273,6 +286,8 @@ var Synth = function (instrument) {
   }
   this.masterGain = AudioEngine.getContext().createGain();
   this.masterGain.gain.value = 0;
+  this.volume = AudioEngine.getContext().createGain();
+  this.volume.gain.value = 1;
 
   for (var i = 0; i < waves.length; i++) {
     var osc = AudioEngine.getContext().createOscillator();
@@ -280,7 +295,8 @@ var Synth = function (instrument) {
     osc.start(0);
     this.oscillators.push(osc);
     var gain = AudioEngine.getContext().createGain();
-    gain.gain.value = 1.0;
+    console.log(1.0 / waves.length);
+    gain.gain.value = 1.0 / waves.length;
     this.gainNodes.push(gain);
     if (filters) {
       for (var j = 0; j < filters.length; j++) {
@@ -293,7 +309,8 @@ var Synth = function (instrument) {
     } else this.gainNodes[i].connect(this.masterGain);
   }
 
-  this.masterGain.connect(AudioEngine.getContext().destination);
+  this.masterGain.connect(this.volume);
+  this.volume.connect(AudioEngine.getContext().destination);
 };
 
 Synth.prototype.playNote = function (note, a, d, s, r) {
@@ -304,7 +321,7 @@ Synth.prototype.playNote = function (note, a, d, s, r) {
   }
   this.masterGain.gain.cancelScheduledValues(now);
   this.masterGain.gain.setValueAtTime(0.0, now);
-  this.masterGain.gain.linearRampToValueAtTime(1.0, now + a);
+  this.masterGain.gain.linearRampToValueAtTime(1, now + a);
   this.masterGain.gain.linearRampToValueAtTime(0, now + a + d + r);
 };
 

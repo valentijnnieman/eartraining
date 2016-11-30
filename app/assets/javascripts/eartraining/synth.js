@@ -7,6 +7,7 @@ var Synth = function(instrument) {
   this.oscillators = [];
   this.gainNodes = [];
   this.masterGain;
+  this.volume;
 
   switch(instrument) {
     case 'piano':
@@ -37,6 +38,8 @@ var Synth = function(instrument) {
   }
   this.masterGain = AudioEngine.getContext().createGain();
   this.masterGain.gain.value = 0;
+  this.volume = AudioEngine.getContext().createGain();
+  this.volume.gain.value = 1;
 
   for(var i = 0; i < waves.length; i++) {
     var osc = AudioEngine.getContext().createOscillator();
@@ -44,7 +47,8 @@ var Synth = function(instrument) {
     osc.start(0);
     this.oscillators.push(osc)
     var gain = AudioEngine.getContext().createGain();
-    gain.gain.value = 1.0; 
+    console.log(1.0 / waves.length)
+    gain.gain.value = 1.0 / waves.length; 
     this.gainNodes.push(gain);
     if(filters) {
       for (var j = 0; j < filters.length; j++) {
@@ -58,7 +62,8 @@ var Synth = function(instrument) {
     else this.gainNodes[i].connect(this.masterGain);
   }
 
-  this.masterGain.connect(AudioEngine.getContext().destination);
+  this.masterGain.connect(this.volume);
+  this.volume.connect(AudioEngine.getContext().destination);
 }
 
 Synth.prototype.playNote = function(note, a, d, s, r){
@@ -69,7 +74,7 @@ Synth.prototype.playNote = function(note, a, d, s, r){
   }
   this.masterGain.gain.cancelScheduledValues(now);
   this.masterGain.gain.setValueAtTime(0.0, now);
-  this.masterGain.gain.linearRampToValueAtTime(1.0, now + a); 
+  this.masterGain.gain.linearRampToValueAtTime(1, now + a); 
   this.masterGain.gain.linearRampToValueAtTime(0, now + a + d + r);
 }
 
