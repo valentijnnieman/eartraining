@@ -27,6 +27,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "vexflow": "^1.2.83"
+    "vexflow": "^1.2.83",
+    "vue": "^2.1.4"
   }
 }
