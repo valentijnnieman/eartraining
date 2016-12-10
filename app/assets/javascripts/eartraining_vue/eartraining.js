@@ -1,4 +1,7 @@
 var Vue = require('vue/dist/vue.js')
+var VueResource = require('vue-resource')
+
+Vue.use(VueResource)
 
 Vue.component('snippet', {
   template: `
@@ -11,9 +14,8 @@ Vue.component('snippet', {
       <div class='row'>
         <div class='small-12 columns'>
           <div class='snippet__container'>
-            <div class='snippet__canvas-container' id='sheet-${1}'><div class='snippet__playbar'></div></div>
+            <snippet__canvas></snippet_canvas>
             <div class='snippet__section' id='controls-${1}'>
-              <input type='range' id='gain-${1}' class='controls__slider' ></input>
               <input type='range' id='type' class='controls__slider'></input>
             </div>
           </div>
@@ -21,7 +23,7 @@ Vue.component('snippet', {
             <button class='snippet__play button small radius' id='play-${1}'>play</button>
             <div class='snippet__section snippet__section--small snippet__section--wide' id='playbar-${1}'></div>
             <div class='snippet__section snippet__section--small' id='monitor-${1}'>
-              <div class='snippet__canvas-container' id='monitor-canvas-${1}'></div>
+              <input type='range' id='gain-${1}' class='controls__slider' ></input>
             </div>
           </div>
         </div>
@@ -40,21 +42,33 @@ Vue.component('snippet', {
     </div>`
 })
 
+Vue.component('snippet__canvas', {
+  template: "<canvas class='snippet__canvas' id='sheet-${1}'></canvas>"
+})
+
 Vue.component('snippet__title' , {
   data: function() {
     return { 
-      message: 'cool' 
+      title: 'Interval' 
     }
   },
-  template: "<div class='snippet__title'>{{message}}</div>"
+  template: "<div class='snippet__title'>{{title}}</div>"
 })
 
 window.onload = function () {
   new Vue({
     el: "#exercise",
-    data: {
-      test: "Haha!",
-      amountOfExercises: 8 
+    data: function() {
+      var exercise = { test: 'test' }
+      console.log(this)
+      this.$http.get('get_exercise').then(function(response){
+        exercise = response.body
+        console.log(exercise)
+      }, function (response) {
+
+      })
+      console.log(exercise)
+      return exercise
     }
   })
 }

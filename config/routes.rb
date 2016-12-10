@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   get 'exercises/free' => 'exercise#free'
+  get 'exercises/get_exercise' => 'exercise#get_exercise'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

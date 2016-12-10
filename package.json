@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "vexflow": "^1.2.83",
-    "vue": "^2.1.4"
+    "vue": "^2.1.4",
+    "vue-resource": "^1.0.3"
   }
 }
