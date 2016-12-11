@@ -1,0 +1,10 @@
+%h1 Create a new exercise
+
+.row 
+  .small-12.columns
+    = form_for @new_exercise, url: {action: "create"} do |f|
+      = f.text_field :title
+      = f.text_area :json_data, size: "60x12"
+      = f.text_field :points
+      = f.text_field :amount_of_exercises
+      = f.submit "Create exercise"
