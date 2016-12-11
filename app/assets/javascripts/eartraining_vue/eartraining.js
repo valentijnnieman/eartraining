@@ -4,11 +4,13 @@ var VueResource = require('vue-resource')
 Vue.use(VueResource)
 
 Vue.component('snippet', {
+  props: ['exercise'],
   template: `
+  {{ exercise }}
     <div class='snippet'>
       <div class='row'>
         <div class='small-12 columns'>
-          <snippet__title title='hihi'></snippet__title>
+          <snippet__points :name='exercise.points'></snippet__points>
         </div>
       </div>
       <div class='row'>
@@ -46,29 +48,25 @@ Vue.component('snippet__canvas', {
   template: "<canvas class='snippet__canvas' id='sheet-${1}'></canvas>"
 })
 
-Vue.component('snippet__title' , {
-  data: function() {
-    return { 
-      title: 'Interval' 
-    }
-  },
-  template: "<div class='snippet__title'>{{title}}</div>"
+Vue.component('snippet__points' , {
+  props: ['name'],
+  template: "<div class='snippet__points'>{{name}}</div>"
 })
 
 window.onload = function () {
   new Vue({
-    el: "#exercise",
     data: function() {
-      var exercise = { test: 'test' }
-      console.log(this)
+      return { exercise: "Loading..." }
+    },
+    mounted: function() {
+      var self = this;
       this.$http.get('get_exercise').then(function(response){
-        exercise = response.body
-        console.log(exercise)
+        self.exercise = response.body
+        console.log(self.exercise)
       }, function (response) {
 
       })
-      console.log(exercise)
-      return exercise
-    }
+    },
+    el: "#exercise"
   })
 }

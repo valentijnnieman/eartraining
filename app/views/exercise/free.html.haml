@@ -4,6 +4,7 @@
   = render 'exercise/shared/sidebar'
   .exercise_container
     #exercise
-      <snippet v-for="n in amountOfExercises">Hi</snippet>
+      %h1 {{exercise.title}}
+      <snippet :exercise='exercise' v-for="n in exercise.amount_of_exercises">Hi</snippet>
 
   :javascript
