@@ -197,14 +197,12 @@ module.exports = Synth;
 
 },{"./engine.js":1}],3:[function(require,module,exports){
 var Vue = require('vue/dist/vue.js');
-var VueResource = require('vue-resource');
 var Vex = require('vexflow');
-var Synth = require('./classes/synth.js');
-var AudioEngine = require('./classes/engine.js');
 
-Vue.use(VueResource);
+var Synth = require('../classes/synth.js');
+var AudioEngine = require('../classes/engine.js');
 
-Vue.component('snippet', {
+module.exports = Vue.component('snippet', {
   props: ['snippet_data', 'index'],
   data: function () {
     return {
@@ -235,7 +233,9 @@ Vue.component('snippet', {
           </div>
           <div class='snippet__container'>
             <button class='snippet__play button small radius' v-on:click='play'>play</button>
-            <div class='snippet__section snippet__section--small snippet__section--wide'></div>
+            <div class='snippet__section snippet__section--small snippet__section--wide'>
+              <snippet__visualizer></snippet__visualizer>
+            </div>
             <div class='snippet__section snippet__section--small'> 
               <input type='range' class='controls__slider'></input>
             </div>
@@ -285,6 +285,31 @@ Vue.component('snippet__canvas', {
   }
 });
 
+Vue.component('snippet__visualizer', {
+  data: function () {
+    this.analyser = AudioEngine.getContext().createAnalyser();
+    this.analyser.fftSize = 2048;
+    this.bufferLength = this.analyser.frequencyBinCount;
+    this.monitor_data = new Uint8Array(this.bufferLength);
+    this.analyser.getByteTimeDomainData(this.monitor_data);
+    return this;
+  },
+  methods: {
+    connect: function (synth) {
+      synth.connectToAnalyser(this.analyser);
+    }
+  },
+  template: "<canvas height=30 width=150 class='snippet__canvas' ref='canvas'></canvas>"
+});
+
+},{"../classes/engine.js":1,"../classes/synth.js":2,"vexflow":5,"vue/dist/vue.js":7}],4:[function(require,module,exports){
+var Vue = require('vue/dist/vue.js');
+var VueResource = require('vue-resource');
+
+var Snippet = require('./components/snippet.js');
+
+Vue.use(VueResource);
+
 Vue.component('snippet__points', {
   props: ['amount'],
   template: "<div class='snippet__points'>{{amount}}</div>"
@@ -304,11 +329,14 @@ window.onload = function () {
         self.exercise.json_data = json_data;
       }, function (response) {});
     },
+    components: {
+      snippet: Snippet
+    },
     el: "#exercise"
   });
 };
 
-},{"./classes/engine.js":1,"./classes/synth.js":2,"vexflow":4,"vue-resource":5,"vue/dist/vue.js":6}],4:[function(require,module,exports){
+},{"./components/snippet.js":3,"vue-resource":6,"vue/dist/vue.js":7}],5:[function(require,module,exports){
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -23577,7 +23605,7 @@ return /******/ (function(modules) { // webpackBootstrap
 });
 ;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /*!
  * vue-resource v1.0.3
  * https://github.com/vuejs/vue-resource
@@ -25096,7 +25124,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 module.exports = plugin;
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 (function (global){
 /*!
  * Vue.js v2.1.6
@@ -33426,4 +33454,4 @@ return Vue$3;
 })));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}]},{},[3]);
+},{}]},{},[4]);

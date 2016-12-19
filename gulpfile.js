@@ -25,5 +25,5 @@ gulp.task('default', function () {
   gulp.run('scripts', 'browserify');
 });
 gulp.task('watch', function () {
-  gulp.watch('app/assets/javascripts/**/*.js', ['browserify']);
+  gulp.watch('app/assets/javascripts/eartraining_vue/**/*.js', ['browserify']);
 });
