@@ -1,7 +1,17 @@
-.sidebar-menu
+.sidebar
+  border-right: 1px solid $border-color
+  background-color: $sidebar-background-color
+  color: #EEEEEE
+  height: 100%
+  width: 240px
+  left: 0
+  position: fixed
+  padding-top: 64px
+.sidebar-menu-button
+  z-index: 10
   position: absolute
-  left: 20px
-  top: 20px
+  left: 8px
+  top: 8px
   width: 32px 
   height: 32px
   border-radius: 100%
@@ -10,6 +20,8 @@
   transition: all 0.4s
   &:hover
     transform: scale(1.2)
+  &:active
+    box-shadow: inset 1px 1px 1px 1px #bfbfbf
   &__line
     display: block
     height: 1px
@@ -25,17 +37,21 @@
     &--3
       top: 19px
       width: 16px
-.sidebar
-  border-right: 1px solid $border-color
-  background-color: $gray-background-color
-  height: 100%
-  width: 240px
-  left: 0
-  position: fixed
+.sidebar-menu-button.sidebar-menu-button--close
+  .sidebar-menu-button__line
+    &--1
+      top: 16px
+      transform: rotate(-45deg)
+    &--2
+      display: none
+    &--3
+      top: 16px
+      transform: rotate(45deg)
 
 .breadcrumbs
   &__item
     display: block
+    color: #EEEEEE !important
     ::after
       content: "a" !important
       width: 1px
