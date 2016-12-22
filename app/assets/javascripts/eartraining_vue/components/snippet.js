@@ -14,11 +14,20 @@ module.exports = Vue.component('snippet', {
   methods: {
     play: function() {
       console.log(this.synth)
-      this.synth.playNote(this.snippet_data.notes[0].key, 0.01, 0.2, 1.0, 0.8)
       var self = this
+      console.log("this refs visualizer")
+      console.log(this.$refs.visualizer)
+      this.$refs.visualizer.connect(this.synth)
+      this.$refs.visualizer.animate()
+
+      this.synth.playNote(this.snippet_data.notes[0].key, 0.01, 0.2, 1.0, 0.8)
       window.setTimeout(function() {
         self.synth.playNote(self.snippet_data.notes[1].key, 0.01, 0.2, 1.0, 0.8)
       }, self.snippet_data.speed)
+      window.setTimeout(function() {
+        self.$refs.visualizer.clear()
+        cancelAnimationFrame(self.$refs.visualizer.drawVisual);
+      }, self.snippet_data.speed * 2)
     }
   },
   template: `
@@ -36,7 +45,7 @@ module.exports = Vue.component('snippet', {
           <div class='snippet__container'>
             <button class='snippet__play button small radius' v-on:click='play'>play</button>
             <div class='snippet__section snippet__section--small snippet__section--wide'>
-              <snippet__visualizer></snippet__visualizer>
+              <snippet__visualizer ref='visualizer'></snippet__visualizer>
             </div>
             <div class='snippet__section snippet__section--small'> 
               <input type='range' class='controls__slider'></input>
@@ -91,16 +100,64 @@ Vue.component('snippet__canvas', {
 
 Vue.component('snippet__visualizer', {
   data: function() {
-    this.analyser = AudioEngine.getContext().createAnalyser()
-    this.analyser.fftSize = 2048
-    this.bufferLength = this.analyser.frequencyBinCount
-    this.monitor_data = new Uint8Array(this.bufferLength)
-    this.analyser.getByteTimeDomainData(this.monitor_data)
-    return this
+    var returnData = { }
+    returnData.analyser = AudioEngine.getContext().createAnalyser()
+    returnData.analyser.fftSize = 2048
+    returnData.bufferLength = returnData.analyser.frequencyBinCount
+    returnData.monitor_data = new Uint8Array(returnData.bufferLength)
+    returnData.analyser.getByteTimeDomainData(returnData.monitor_data)
+    return returnData 
+  },
+  mounted: function(){
+    this.canvas = this.$refs.canvas.getContext('2d') 
+    this.width = this.$refs.canvas.width
+    this.height = this.$refs.canvas.height
+    this.gradient = this.canvas.createLinearGradient(0, 0, 0, this.height)
+    this.gradient.addColorStop(0, 'white')
+    this.gradient.addColorStop(0.5, 'rgb(255,0,135)')
+    this.gradient.addColorStop(1, 'white')
   },
   methods: {
     connect: function(synth) {
       synth.connectToAnalyser(this.analyser)
+    },
+    draw: function() {
+      console.log('draw()')
+      this.analyser.getByteTimeDomainData(this.monitor_data);
+      this.drawVisual = requestAnimationFrame(this.draw)
+      this.clear()
+
+      this.canvas.lineWidth = 2
+      this.canvas.strokeStyle = this.gradient
+
+      this.canvas.beginPath();
+
+      var sliceWidth = this.width / this.bufferLength;
+      var x = 0;
+
+      for(var i = 0; i < this.bufferLength; i++) {
+
+        var v = this.monitor_data[i] / 128.0;
+        var y = v * this.height/2;
+
+        if(i === 0) {
+          this.canvas.moveTo(x, y);
+        } else {
+          this.canvas.lineTo(x, y);
+        }
+
+        x += sliceWidth;
+      }
+      this.canvas.lineTo(this.width, this.height/2);
+      this.canvas.stroke();
+    },
+    clear: function() {
+      this.canvas.fillStyle = 'rgb(255, 255, 255)';
+      this.canvas.fillRect(0, 0, this.width, this.height);
+    },
+    animate: function(){
+      this.analyser.getByteTimeDomainData(this.monitor_data);
+      this.draw();
     }
   },
   template: "<canvas height=30 width=150 class='snippet__canvas' ref='canvas'></canvas>"

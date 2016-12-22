@@ -79,6 +79,10 @@ Synth.prototype.playNote = function(note, a, d, s, r){
 }
 
 Synth.prototype.connectToAnalyser = function(analyser) {
+  console.log('Connecting:')
+  console.log(this.masterGain)
+  console.log(' to: ')
+  console.log(analyser)
   this.masterGain.connect(analyser)
 }
 
