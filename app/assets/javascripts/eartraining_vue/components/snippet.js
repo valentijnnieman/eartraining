@@ -113,21 +113,22 @@ Vue.component('snippet__visualizer', {
     this.width = this.$refs.canvas.width
     this.height = this.$refs.canvas.height
     this.gradient = this.canvas.createLinearGradient(0, 0, 0, this.height)
-    this.gradient.addColorStop(0, 'white')
-    this.gradient.addColorStop(0.5, 'rgb(255,0,135)')
-    this.gradient.addColorStop(1, 'white')
+    this.gradient.addColorStop(0, 'rgb(252,236,176)')
+    this.gradient.addColorStop(0.25, 'rgb(252,197,0)')
+    this.gradient.addColorStop(0.5, 'rgb(252,71,0)')
+    this.gradient.addColorStop(0.75, 'rgb(252,197,0)')
+    this.gradient.addColorStop(1, 'rgb(252,236,176)')
   },
   methods: {
     connect: function(synth) {
       synth.connectToAnalyser(this.analyser)
     },
     draw: function() {
-      console.log('draw()')
       this.analyser.getByteTimeDomainData(this.monitor_data);
       this.drawVisual = requestAnimationFrame(this.draw)
-      this.clear()
-
-      this.canvas.lineWidth = 2
+      this.canvas.fillStyle = 'rgb(255, 255, 255)';
+      this.canvas.fillRect(0, 0, this.width, this.height);
+      this.canvas.lineWidth = 15
       this.canvas.strokeStyle = this.gradient
 
       this.canvas.beginPath();
@@ -154,6 +155,16 @@ Vue.component('snippet__visualizer', {
     clear: function() {
       this.canvas.fillStyle = 'rgb(255, 255, 255)';
       this.canvas.fillRect(0, 0, this.width, this.height);
+      this.clearAnimation = requestAnimationFrame(this.clear)
+
+      this.canvas.lineWidth -= 3
+      this.canvas.lineTo(this.width, this.height/2);
+      this.canvas.stroke();
+      if (this.canvas.lineWidth <= 3) {
+        cancelAnimationFrame(this.clearAnimation);
+        this.canvas.fillStyle = 'rgb(255, 255, 255)';
+        this.canvas.fillRect(0, 0, this.width, this.height);
+      }
     },
     animate: function(){
       this.analyser.getByteTimeDomainData(this.monitor_data);
