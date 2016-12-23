@@ -128,7 +128,7 @@ Vue.component('snippet__visualizer', {
       this.drawVisual = requestAnimationFrame(this.draw)
       this.canvas.fillStyle = 'rgb(255, 255, 255)';
       this.canvas.fillRect(0, 0, this.width, this.height);
-      this.canvas.lineWidth = 15
+      this.canvas.lineWidth = 1
       this.canvas.strokeStyle = this.gradient
 
       this.canvas.beginPath();
@@ -155,16 +155,6 @@ Vue.component('snippet__visualizer', {
     clear: function() {
       this.canvas.fillStyle = 'rgb(255, 255, 255)';
       this.canvas.fillRect(0, 0, this.width, this.height);
-      this.clearAnimation = requestAnimationFrame(this.clear)
-
-      this.canvas.lineWidth -= 3
-      this.canvas.lineTo(this.width, this.height/2);
-      this.canvas.stroke();
-      if (this.canvas.lineWidth <= 3) {
-        cancelAnimationFrame(this.clearAnimation);
-        this.canvas.fillStyle = 'rgb(255, 255, 255)';
-        this.canvas.fillRect(0, 0, this.width, this.height);
-      }
     },
     animate: function(){
       this.analyser.getByteTimeDomainData(this.monitor_data);
