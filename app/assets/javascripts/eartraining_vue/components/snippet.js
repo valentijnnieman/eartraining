@@ -126,7 +126,7 @@ Vue.component('snippet__visualizer', {
     draw: function() {
       this.analyser.getByteTimeDomainData(this.monitor_data);
       this.drawVisual = requestAnimationFrame(this.draw)
-      this.canvas.fillStyle = 'rgb(255, 255, 255)';
+      this.canvas.fillStyle = '#f0f0f0';
       this.canvas.fillRect(0, 0, this.width, this.height);
       this.canvas.lineWidth = 1
       this.canvas.strokeStyle = this.gradient
@@ -153,7 +153,7 @@ Vue.component('snippet__visualizer', {
       this.canvas.stroke();
     },
     clear: function() {
-      this.canvas.fillStyle = 'rgb(255, 255, 255)';
+      this.canvas.fillStyle = '#f0f0f0';
       this.canvas.fillRect(0, 0, this.width, this.height);
     },
     animate: function(){
@@ -161,5 +161,5 @@ Vue.component('snippet__visualizer', {
       this.draw();
     }
   },
-  template: "<canvas height=30 width=150 class='snippet__canvas' ref='canvas'></canvas>"
+  template: "<canvas height=30 width=150 class='snippet__canvas snippet__canvas--dark-background' ref='canvas'></canvas>"
 })
