@@ -25,7 +25,7 @@ module.exports = Vue.component('snippet', {
         self.synth.playNote(self.snippet_data.notes[1].key, 0.01, 0.2, 1.0, 0.8)
       }, self.snippet_data.speed)
       window.setTimeout(function() {
-        self.$refs.visualizer.clear()
+        self.$refs.visualizer.flatline()
         cancelAnimationFrame(self.$refs.visualizer.drawVisual);
       }, self.snippet_data.speed * 2)
     }
@@ -118,6 +118,7 @@ Vue.component('snippet__visualizer', {
     this.gradient.addColorStop(0.5, 'rgb(252,71,0)')
     this.gradient.addColorStop(0.75, 'rgb(252,197,0)')
     this.gradient.addColorStop(1, 'rgb(252,236,176)')
+    this.flatline()
   },
   methods: {
     connect: function(synth) {
@@ -126,8 +127,7 @@ Vue.component('snippet__visualizer', {
     draw: function() {
       this.analyser.getByteTimeDomainData(this.monitor_data);
       this.drawVisual = requestAnimationFrame(this.draw)
-      this.canvas.fillStyle = '#f0f0f0';
-      this.canvas.fillRect(0, 0, this.width, this.height);
+      this.canvas.clearRect(0,0, this.width, this.height)
       this.canvas.lineWidth = 1
       this.canvas.strokeStyle = this.gradient
 
@@ -149,12 +149,18 @@ Vue.component('snippet__visualizer', {
 
         x += sliceWidth;
       }
-      this.canvas.lineTo(this.width, this.height/2);
-      this.canvas.stroke();
+      this.canvas.lineTo(this.width, this.height/2)
+      this.canvas.stroke()
     },
-    clear: function() {
-      this.canvas.fillStyle = '#f0f0f0';
-      this.canvas.fillRect(0, 0, this.width, this.height);
+    flatline: function() {
+      this.canvas.clearRect(0,0, this.width, this.height)
+
+      this.canvas.lineWidth = 0.5
+      this.canvas.strokeStyle = this.gradient
+      this.canvas.moveTo(0, this.height/2)
+      this.canvas.lineTo(this.width, this.height/2)
+      this.canvas.stroke();
+      console.log("flatline")
     },
     animate: function(){
       this.analyser.getByteTimeDomainData(this.monitor_data);
