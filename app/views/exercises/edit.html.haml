@@ -2,6 +2,11 @@
 
 .row 
   .small-12.columns
+    #new_exercise
+      %h1 {{exercise.title}}
+      <template v-for="(snippet, index) in exercise.json_data">
+      <snippet :snippet_data='snippet' :index='index'></snippet>
+      </template>
     = form_for @exercise, url: {action: "update"}, method: 'patch' do |f|
       = f.text_field :title
       = f.text_area :json_data, size: "60x12"

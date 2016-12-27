@@ -2,9 +2,35 @@
 
 .row 
   .small-12.columns
+    #new_exercise
+      %h1 {{exercise.title}}
+      <template v-for="(snippet, index) in @new_exercise.json_data">
+      <snippet :snippet_data='snippet' :index='index'></snippet>
+      </template>
     = form_for @new_exercise, url: {action: "create"} do |f|
+      = Exercise.last.id + 1
+      = f.label :title, "Name of exercise"
       = f.text_field :title
-      = f.text_area :json_data, size: "60x12"
+
+      -#= f.label :json_data.key, "in key of"
+      -#= f.text_field :json_data.key
+
+      -#= f.label :type, "type of the snippet(interval, harmony, etc)"
+      -#= f.text_field :type
+
+      -#= f.label :instrument, "type of the instrument used to play the notes (sine, piano, etc)"
+      -#= f.text_field :instrument
+
+      -#= f.label :answer, "answer of the snippet"
+      -#= f.text_field :answer
+
+      -#= f.label :points, "points of the snippet"
+      -#= f.text_field :points
+
+      = f.text_area :json_data, size: "60x12", value: 'hi'
+
+      = f.label :points, "Amount of points awarded for clearing exercise"
       = f.text_field :points
+      = f.label :amount_of_exercises, "Amount of exercises (snippets) in exercise"
       = f.text_field :amount_of_exercises
       = f.submit "Create exercise"
