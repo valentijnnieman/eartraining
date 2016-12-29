@@ -48,6 +48,6 @@ class ExercisesController < ApplicationController
 
   private
   def exercise_params
-    params.require(:exercise).permit(:title, :json_data, :points, :amount_of_exercises)
+    params.require(:exercise).permit(:title, :points, :amount_of_exercises, json_data: [:key, :type, :instrument, :answer, :points])
   end
 end

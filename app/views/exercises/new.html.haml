@@ -11,23 +11,29 @@
       = Exercise.last.id + 1
       = f.label :title, "Name of exercise"
       = f.text_field :title
+      .row
+        = f.fields_for :json_data do |data|
+          .small-2.columns
+            = data.label :key, "in key of"
+            = data.text_field :key
 
-      -#= f.label :json_data.key, "in key of"
-      -#= f.text_field :json_data.key
+          .small-2.columns
+            = data.label :type, "type of the snippet(interval, harmony, etc)"
+            = data.text_field :type
 
-      -#= f.label :type, "type of the snippet(interval, harmony, etc)"
-      -#= f.text_field :type
+          .small-2.columns
+            = data.label :instrument, "type of the instrument used to play the notes (sine, piano, etc)"
+            = data.text_field :instrument
 
-      -#= f.label :instrument, "type of the instrument used to play the notes (sine, piano, etc)"
-      -#= f.text_field :instrument
+          .small-2.columns
+            = data.label :answer, "answer of the snippet"
+            = data.text_field :answer
 
-      -#= f.label :answer, "answer of the snippet"
-      -#= f.text_field :answer
+          .small-2.columns
+            = data.label :points, "points of the snippet"
+            = data.text_field :points
 
-      -#= f.label :points, "points of the snippet"
-      -#= f.text_field :points
-
-      = f.text_area :json_data, size: "60x12", value: 'hi'
+      -#= f.text_area :json_data, size: "60x12", value: 'hi'
 
       = f.label :points, "Amount of points awarded for clearing exercise"
       = f.text_field :points
