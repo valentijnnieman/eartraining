@@ -5,7 +5,7 @@
     #new_exercise
       %h1 {{exercise.title}}
       <template v-for="(snippet, index) in exercise.json_data">
-      <snippet :snippet_data='snippet' :index='index'></snippet>
+      <edit_snippet :snippet_data='snippet' :index='index'></edit_snippet>
       </template>
     = form_for @exercise, url: {action: "update"}, method: 'patch' do |f|
       = f.text_field :title

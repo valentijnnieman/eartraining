@@ -3,40 +3,19 @@
 .row 
   .small-12.columns
     #new_exercise
-      %h1 {{exercise.title}}
-      <template v-for="(snippet, index) in @new_exercise.json_data">
-      <snippet :snippet_data='snippet' :index='index'></snippet>
+      <template v-for="(snippet, index) in exercise.json_data">
+      <edit_snippet :snippet_data='snippet' :index='index'></edit_snippet>
       </template>
-    = form_for @new_exercise, url: {action: "create"} do |f|
+      <new_snippet :exercise='exercise'></new_snippet>
       = Exercise.last.id + 1
-      = f.label :title, "Name of exercise"
-      = f.text_field :title
-      .row
-        = f.fields_for :json_data do |data|
-          .small-2.columns
-            = data.label :key, "in key of"
-            = data.text_field :key
+      = form_for @new_exercise, url: {action: "create"} do |f|
+        = f.label :title, "Name of exercise"
+        = f.text_field :title
+        <textarea name='exercise[json_data]' id='exercise_json_data' :v-bind="exercise.json_data">{{exercise.json_data}}</textarea>
+        -#= f.text_area :json_data, size: "60x12"
 
-          .small-2.columns
-            = data.label :type, "type of the snippet(interval, harmony, etc)"
-            = data.text_field :type
-
-          .small-2.columns
-            = data.label :instrument, "type of the instrument used to play the notes (sine, piano, etc)"
-            = data.text_field :instrument
-
-          .small-2.columns
-            = data.label :answer, "answer of the snippet"
-            = data.text_field :answer
-
-          .small-2.columns
-            = data.label :points, "points of the snippet"
-            = data.text_field :points
-
-      -#= f.text_area :json_data, size: "60x12", value: 'hi'
-
-      = f.label :points, "Amount of points awarded for clearing exercise"
-      = f.text_field :points
-      = f.label :amount_of_exercises, "Amount of exercises (snippets) in exercise"
-      = f.text_field :amount_of_exercises
-      = f.submit "Create exercise"
+        = f.label :points, "Amount of points awarded for clearing exercise"
+        = f.text_field :points
+        = f.label :amount_of_exercises, "Amount of exercises (snippets) in exercise"
+        = f.text_field :amount_of_exercises
+        = f.submit "Create exercise"

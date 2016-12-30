@@ -206,32 +206,102 @@ var Vex = require('vexflow');
 var Synth = require('../classes/synth.js');
 var AudioEngine = require('../classes/engine.js');
 
-module.exports = Vue.component('snippet', {
-  props: ['snippet_data', 'index'],
-  data: function () {
-    return {
-      synth: new Synth(this.snippet_data.instrument)
-    };
-  },
-  methods: {
-    play: function () {
-      console.log(this.synth);
-      var self = this;
-      console.log("this refs visualizer");
-      console.log(this.$refs.visualizer);
-      this.$refs.visualizer.connect(this.synth);
-      this.$refs.visualizer.animate();
+var snippet = require('../mixins/snippet.js');
+var sheet = require('../mixins/sheet.js');
 
-      this.synth.playNote(this.snippet_data.notes[0].key, 0.01, 0.2, 1.0, 0.8);
-      window.setTimeout(function () {
-        self.synth.playNote(self.snippet_data.notes[1].key, 0.01, 0.2, 1.0, 0.8);
-      }, self.snippet_data.speed);
-      window.setTimeout(function () {
-        self.$refs.visualizer.flatline();
-        cancelAnimationFrame(self.$refs.visualizer.drawVisual);
-      }, self.snippet_data.speed * 2);
+module.exports = Vue.component('edit_snippet', {
+  mixins: [snippet],
+  template: `
+    <div class='snippet'>
+      <div class='row'>
+        <div class='small-12 columns'>
+          <snippet__points :amount='snippet_data.points'></snippet__points>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='small-12 columns'>
+          <div class='snippet__container'>
+            <snippet__canvas :in_key_of='snippet_data.key' :notes='snippet_data.notes'></snippet_canvas>
+          </div>
+          <div class='snippet__container'>
+            <button class='snippet__play button small radius' v-on:click='play'>play</button>
+            <div class='snippet__section snippet__section--small snippet__section--wide'>
+              <snippet__visualizer ref='visualizer'></snippet__visualizer>
+            </div>
+            <div class='snippet__section snippet__section--small'> 
+              <input type='range' class='controls__slider'></input>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='small-12 columns'>
+          <div class='answer_input'>
+            <ul class='answer_input__menu'>
+              <li> 1st </li>
+              <li> 2nd </li>
+              <li> 3th </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>`
+});
+
+},{"../classes/engine.js":1,"../classes/synth.js":2,"../mixins/sheet.js":7,"../mixins/snippet.js":8,"vexflow":9,"vue/dist/vue.js":11}],4:[function(require,module,exports){
+var Vue = require('vue/dist/vue.js');
+var Vex = require('vexflow');
+
+var Synth = require('../classes/synth.js');
+var AudioEngine = require('../classes/engine.js');
+
+var snippet = require('../mixins/snippet.js');
+var sheet = require('../mixins/sheet.js');
+
+module.exports = Vue.component('new_snippet', {
+  props: ['exercise'],
+  methods: {
+    add_new_snippet: function () {
+      var new_snippet = {
+        "key": "C",
+        "type": "interval",
+        "instrument": "sine",
+        "answer": "m3",
+        "points": "10",
+        "notes": [{
+          "key": "c/4",
+          "duration": "q"
+        }, {
+          "key": "eb/4",
+          "duration": "q"
+        }],
+        "speed": "1000"
+      };
+      this.exercise.json_data.push(new_snippet);
     }
   },
+  template: `
+    <div class='snippet' v-on:click='add_new_snippet()'>
+      <div class='row'>
+        <div class='small-2 columns'>
+          <h3>+</h3>
+        </div>
+      </div>
+    </div>`
+});
+
+},{"../classes/engine.js":1,"../classes/synth.js":2,"../mixins/sheet.js":7,"../mixins/snippet.js":8,"vexflow":9,"vue/dist/vue.js":11}],5:[function(require,module,exports){
+var Vue = require('vue/dist/vue.js');
+var Vex = require('vexflow');
+
+var Synth = require('../classes/synth.js');
+var AudioEngine = require('../classes/engine.js');
+
+var snippet = require('../mixins/snippet.js');
+var sheet = require('../mixins/sheet.js');
+
+module.exports = Vue.component('snippet', {
+  mixins: [snippet],
   template: `
     <div class='snippet'>
       <div class='row'>
@@ -270,32 +340,8 @@ module.exports = Vue.component('snippet', {
 });
 
 Vue.component('snippet__canvas', {
-  props: ['in_key_of', 'notes'],
-  template: "<canvas height=80 width=296 class='snippet__canvas' ref='canvas'></canvas>",
-  mounted: function () {
-    this.renderer = new Vex.Flow.Renderer(this.$refs.canvas, Vex.Flow.Renderer.Backends.CANVAS);
-    this.vexCtx = this.renderer.getContext();
-    var stave = new Vex.Flow.Stave(8, -16, 282);
-    console.log("props!");
-    console.log(this.in_key_of);
-    stave.addClef("treble").addKeySignature(this.in_key_of).setContext(this.vexCtx).draw();
-
-    var voice = new Vex.Flow.Voice({
-      num_beats: 2,
-      beat_value: 4,
-      resolution: Vex.Flow.RESOLUTION
-    });
-
-    var notesToDraw = [];
-
-    for (var i = 0; i < this.notes.length; i++) {
-      note = new Vex.Flow.StaveNote({ clef: "treble", auto_stem: true, keys: [this.notes[i].key], duration: this.notes[i].duration }), notesToDraw.push(note);
-    }
-
-    voice.addTickables(notesToDraw);
-    formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 120);
-    voice.draw(this.vexCtx, stave);
-  }
+  mixins: [sheet],
+  template: "<canvas height=80 width=296 class='snippet__canvas' ref='canvas'></canvas>"
 });
 
 Vue.component('snippet__visualizer', {
@@ -360,7 +406,6 @@ Vue.component('snippet__visualizer', {
       this.canvas.moveTo(0, this.height / 2);
       this.canvas.lineTo(this.width, this.height / 2);
       this.canvas.stroke();
-      console.log("flatline");
     },
     animate: function () {
       this.analyser.getByteTimeDomainData(this.monitor_data);
@@ -370,11 +415,13 @@ Vue.component('snippet__visualizer', {
   template: "<canvas height=30 width=150 class='snippet__canvas snippet__canvas--dark-background' ref='canvas'></canvas>"
 });
 
-},{"../classes/engine.js":1,"../classes/synth.js":2,"vexflow":5,"vue/dist/vue.js":7}],4:[function(require,module,exports){
+},{"../classes/engine.js":1,"../classes/synth.js":2,"../mixins/sheet.js":7,"../mixins/snippet.js":8,"vexflow":9,"vue/dist/vue.js":11}],6:[function(require,module,exports){
 var Vue = require('vue/dist/vue.js');
 var VueResource = require('vue-resource');
 
 var Snippet = require('./components/snippet.js');
+var EditSnippet = require('./components/edit_snippet.js');
+var NewSnippet = require('./components/new_snippet.js');
 
 Vue.use(VueResource);
 
@@ -386,14 +433,13 @@ Vue.component('snippet__points', {
 window.onload = function () {
   var ExerciseApp = new Vue({
     data: function () {
-      return { exercise: "Loading..." };
+      return { exercise: {} };
     },
     mounted: function () {
       var self = this;
       this.$http.get('get_exercise/2').then(function (response) {
         self.exercise = response.body;
         json_data = JSON.parse(response.body.json_data);
-        console.log(json_data);
         self.exercise.json_data = json_data;
       }, function (response) {});
     },
@@ -405,25 +451,95 @@ window.onload = function () {
 
   var EditApp = new Vue({
     data: function () {
-      return { exercise: "Loading..." };
+      return { exercise: [], test: "hi" };
     },
     mounted: function () {
-      var self = this;
-      this.$http.get('get_exercise/5').then(function (response) {
-        self.exercise = response.body;
-        json_data = JSON.parse(response.body.json_data);
-        console.log(json_data);
-        self.exercise.json_data = json_data;
-      }, function (response) {});
+      this.exercise = {
+        "id": 0,
+        "title": "New Exercise",
+        "json_data": [],
+        "points": 10,
+        "amount_of_exercises": 0
+      };
     },
     components: {
-      snippet: Snippet
+      editSnippet: EditSnippet,
+      newSnippet: NewSnippet
     },
     el: "#new_exercise"
   });
 };
 
-},{"./components/snippet.js":3,"vue-resource":6,"vue/dist/vue.js":7}],5:[function(require,module,exports){
+},{"./components/edit_snippet.js":3,"./components/new_snippet.js":4,"./components/snippet.js":5,"vue-resource":10,"vue/dist/vue.js":11}],7:[function(require,module,exports){
+var Vue = require('vue/dist/vue.js');
+var Vex = require('vexflow');
+
+var Synth = require('../classes/synth.js');
+var AudioEngine = require('../classes/engine.js');
+
+var sheet = {
+  props: ['in_key_of', 'notes'],
+  mounted: function () {
+    this.renderer = new Vex.Flow.Renderer(this.$refs.canvas, Vex.Flow.Renderer.Backends.CANVAS);
+    this.vexCtx = this.renderer.getContext();
+    var stave = new Vex.Flow.Stave(8, -16, 282);
+    stave.addClef("treble").addKeySignature(this.in_key_of).setContext(this.vexCtx).draw();
+
+    var voice = new Vex.Flow.Voice({
+      num_beats: 2,
+      beat_value: 4,
+      resolution: Vex.Flow.RESOLUTION
+    });
+
+    var notesToDraw = [];
+
+    for (var i = 0; i < this.notes.length; i++) {
+      note = new Vex.Flow.StaveNote({ clef: "treble", auto_stem: true, keys: [this.notes[i].key], duration: this.notes[i].duration }), notesToDraw.push(note);
+    }
+
+    voice.addTickables(notesToDraw);
+    formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 120);
+    voice.draw(this.vexCtx, stave);
+  }
+};
+
+module.exports = sheet;
+
+},{"../classes/engine.js":1,"../classes/synth.js":2,"vexflow":9,"vue/dist/vue.js":11}],8:[function(require,module,exports){
+var Vue = require('vue/dist/vue.js');
+var Vex = require('vexflow');
+
+var Synth = require('../classes/synth.js');
+var AudioEngine = require('../classes/engine.js');
+
+var snippet = {
+  props: ['snippet_data', 'index'],
+  data: function () {
+    return {
+      synth: new Synth(this.snippet_data.instrument)
+    };
+  },
+  methods: {
+    play: function () {
+      var self = this;
+      this.$refs.visualizer.connect(this.synth);
+      this.$refs.visualizer.animate();
+
+      this.synth.playNote(this.snippet_data.notes[0].key, 0.01, 0.2, 1.0, 0.8);
+      window.setTimeout(function () {
+        self.synth.playNote(self.snippet_data.notes[1].key, 0.01, 0.2, 1.0, 0.8);
+      }, self.snippet_data.speed);
+      window.setTimeout(function () {
+        self.$refs.visualizer.flatline();
+        cancelAnimationFrame(self.$refs.visualizer.drawVisual);
+      }, self.snippet_data.speed * 2);
+    }
+  }
+};
+
+module.exports = snippet;
+
+},{"../classes/engine.js":1,"../classes/synth.js":2,"vexflow":9,"vue/dist/vue.js":11}],9:[function(require,module,exports){
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -23692,7 +23808,7 @@ return /******/ (function(modules) { // webpackBootstrap
 });
 ;
 
-},{}],6:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /*!
  * vue-resource v1.0.3
  * https://github.com/vuejs/vue-resource
@@ -25211,7 +25327,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 module.exports = plugin;
-},{}],7:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 (function (global){
 /*!
  * Vue.js v2.1.6
@@ -33541,4 +33657,4 @@ return Vue$3;
 })));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}]},{},[4]);
+},{}]},{},[6]);
