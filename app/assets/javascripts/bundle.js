@@ -284,7 +284,7 @@ module.exports = Vue.component('new_snippet', {
     <div class='snippet' v-on:click='add_new_snippet()'>
       <div class='row'>
         <div class='small-2 columns'>
-          <h3>+</h3>
+          <h3 class='centered'>+</h3>
         </div>
       </div>
     </div>`

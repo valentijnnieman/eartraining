@@ -1,21 +1,26 @@
-%h1 Create a new exercise
+.row
+  .small-12.columns
+    %h1= Exercise.last.id + 1
 
+.row
+  .small-12.columns
 .row 
   .small-12.columns
     #new_exercise
-      <template v-for="(snippet, index) in exercise.json_data">
-      <edit_snippet :snippet_data='snippet' :index='index'></edit_snippet>
-      </template>
-      <new_snippet :exercise='exercise'></new_snippet>
-      = Exercise.last.id + 1
-      = form_for @new_exercise, url: {action: "create"} do |f|
-        = f.label :title, "Name of exercise"
-        = f.text_field :title
-        <textarea name='exercise[json_data]' id='exercise_json_data' :v-bind="exercise.json_data">{{exercise.json_data}}</textarea>
-        -#= f.text_area :json_data, size: "60x12"
+      .row
+        <template v-for="(snippet, index) in exercise.json_data">
+        <edit_snippet :snippet_data='snippet' :index='index'></edit_snippet>
+        </template>
+        <new_snippet :exercise='exercise'></new_snippet>
+      .row
+        = form_for @new_exercise, url: {action: "create"} do |f|
+          = f.label :title, "Name of exercise"
+          = f.text_field :title
+          <textarea name='exercise[json_data]' id='exercise_json_data' :v-bind="exercise.json_data">{{exercise.json_data}}</textarea>
+          -#= f.text_area :json_data, size: "60x12"
 
-        = f.label :points, "Amount of points awarded for clearing exercise"
-        = f.text_field :points
-        = f.label :amount_of_exercises, "Amount of exercises (snippets) in exercise"
-        = f.text_field :amount_of_exercises
-        = f.submit "Create exercise"
+          = f.label :points, "Amount of points awarded for clearing exercise"
+          = f.text_field :points
+          = f.label :amount_of_exercises, "Amount of exercises (snippets) in exercise"
+          = f.text_field :amount_of_exercises
+          = f.submit "Create exercise"
