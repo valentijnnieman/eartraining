@@ -4,32 +4,11 @@ var Vex = require('vexflow');
 var Synth = require('../classes/synth.js')
 var AudioEngine = require('../classes/engine.js')
 
-module.exports = Vue.component('snippet', {
-  props: ['snippet_data', 'index'],
-  data: function() {
-    return {
-      synth: new Synth(this.snippet_data.instrument)
-    }
-  },
-  methods: {
-    play: function() {
-      console.log(this.synth)
-      var self = this
-      console.log("this refs visualizer")
-      console.log(this.$refs.visualizer)
-      this.$refs.visualizer.connect(this.synth)
-      this.$refs.visualizer.animate()
+var snippet = require('../mixins/snippet.js')
+var sheet = require('../mixins/sheet.js')
 
-      this.synth.playNote(this.snippet_data.notes[0].key, 0.01, 0.2, 1.0, 0.8)
-      window.setTimeout(function() {
-        self.synth.playNote(self.snippet_data.notes[1].key, 0.01, 0.2, 1.0, 0.8)
-      }, self.snippet_data.speed)
-      window.setTimeout(function() {
-        self.$refs.visualizer.flatline()
-        cancelAnimationFrame(self.$refs.visualizer.drawVisual);
-      }, self.snippet_data.speed * 2)
-    }
-  },
+module.exports = Vue.component('snippet', {
+  mixins: [snippet],
   template: `
     <div class='snippet'>
       <div class='row'>
@@ -68,34 +47,8 @@ module.exports = Vue.component('snippet', {
 })
 
 Vue.component('snippet__canvas', {
-  props: ['in_key_of', 'notes'],
+  mixins: [sheet],
   template: "<canvas height=80 width=296 class='snippet__canvas' ref='canvas'></canvas>",
-  mounted: function() {
-    this.renderer = new Vex.Flow.Renderer(this.$refs.canvas,
-      Vex.Flow.Renderer.Backends.CANVAS)
-    this.vexCtx = this.renderer.getContext()
-    var stave = new Vex.Flow.Stave(8, -16, 282);
-    console.log("props!")
-    console.log(this.in_key_of)
-    stave.addClef("treble").addKeySignature(this.in_key_of).setContext(this.vexCtx).draw();
-
-    var voice = new Vex.Flow.Voice({
-      num_beats: 2,
-      beat_value: 4,
-      resolution: Vex.Flow.RESOLUTION
-    });
-
-    var notesToDraw = []
-
-    for (var i = 0; i < this.notes.length; i++){
-      note = new Vex.Flow.StaveNote({ clef: "treble", auto_stem: true, keys: [this.notes[i].key], duration: this.notes[i].duration }),
-      notesToDraw.push(note)
-    }
-
-    voice.addTickables(notesToDraw);
-    formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 120);
-    voice.draw(this.vexCtx, stave);
-  }
 })
 
 Vue.component('snippet__visualizer', {
@@ -160,7 +113,6 @@ Vue.component('snippet__visualizer', {
       this.canvas.moveTo(0, this.height/2)
       this.canvas.lineTo(this.width, this.height/2)
       this.canvas.stroke();
-      console.log("flatline")
     },
     animate: function(){
       this.analyser.getByteTimeDomainData(this.monitor_data);
