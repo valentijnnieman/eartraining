@@ -9,8 +9,19 @@ var sheet = require('../mixins/sheet.js')
 
 module.exports = Vue.component('edit_snippet', {
   mixins: [snippet],
+  methods: {
+    delete_snippet: function() {
+      console.log("click!")
+      this.$emit('delete')
+    }
+  },
   template: `
     <div class='snippet'>
+      <div class='row'>
+        <div class='small-2 columns'>
+          <h3 class='centered' v-on:click='delete_snippet()'>b</h3>
+        </div>
+      </div>
       <div class='row'>
         <div class='small-12 columns'>
           <snippet__points :amount='snippet_data.points'></snippet__points>

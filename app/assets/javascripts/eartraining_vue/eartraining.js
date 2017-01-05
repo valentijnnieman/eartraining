@@ -3,7 +3,7 @@ var VueResource = require('vue-resource')
 
 var Snippet = require('./components/snippet.js');
 var EditSnippet = require('./components/edit_snippet.js');
-var NewSnippet= require('./components/new_snippet.js');
+var CreateSnippet= require('./components/create_snippet.js');
 
 Vue.use(VueResource)
 
@@ -48,7 +48,16 @@ window.onload = function () {
     },
     components: {
       editSnippet: EditSnippet,
-      newSnippet: NewSnippet
+      createSnippet: CreateSnippet
+    },
+    methods: {
+      delete_snippet: function(i) {
+        // TO-DO: This now deletes the last element added instead of the one clicked on
+        console.log(i)
+        if (i > -1) {
+          this.exercise.json_data.splice(i, 1)
+        }
+      }
     },
     el: "#new_exercise"
   })

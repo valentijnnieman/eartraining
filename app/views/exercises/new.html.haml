@@ -9,9 +9,9 @@
     #new_exercise
       .row
         <template v-for="(snippet, index) in exercise.json_data">
-        <edit_snippet :snippet_data='snippet' :index='index'></edit_snippet>
+        <edit_snippet :snippet_data='snippet' :index='index' v-on:delete="delete_snippet(index)"></edit_snippet>
         </template>
-        <new_snippet :exercise='exercise'></new_snippet>
+        <create_snippet :exercise='exercise'></new_snippet>
       .row
         = form_for @new_exercise, url: {action: "create"} do |f|
           = f.label :title, "Name of exercise"
