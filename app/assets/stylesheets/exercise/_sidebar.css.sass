@@ -3,7 +3,10 @@
   background-color: $sidebar-background-color
   color: #EEEEEE
   height: 100%
-  width: 240px
+  width: 100%
+  z-index: 9
+  @media #{$medium-up}
+    width: 240px
   left: -300
   position: fixed
   padding-top: 64px
