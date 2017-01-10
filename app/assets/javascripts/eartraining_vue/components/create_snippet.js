@@ -22,10 +22,10 @@ module.exports = Vue.component('create_snippet', {
     add_new_snippet: function() {
       this.new_snippet = {
         "key": this.key,
-        "type": "interval",
-        "instrument": "sine",
+        "type": this.type,
+        "instrument": this.instrument,
         "answer": "m3",
-        "points": "10", 
+        "points": this.points, 
         "notes": [{
           "key": this.note_1,
           "duration": "q"
@@ -41,7 +41,7 @@ module.exports = Vue.component('create_snippet', {
   template: `
     <div class='snippet'>
       <div class='row'>
-        <div class='small-12 columns'>
+        <div class='small-8 columns'>
           <span>Key: </span>
           <select v-model="key">
             <option> C </option>
@@ -50,6 +50,29 @@ module.exports = Vue.component('create_snippet', {
             <option> D# </option>
             <option> E </option>
             <option> F </option>
+          </select>
+        </div>
+        <div class='small-4 columns'>
+          <span>Type: </span>
+          <select v-model="type">
+            <option> Interval </option>
+          </select>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='small-8 columns'>
+          <span>Instrument: </span>
+          <select v-model="instrument">
+            <option> Sine </option>
+          </select>
+        </div>
+        <div class='small-4 columns'>
+          <span>Points: </span>
+          <select v-model="points">
+            <option>5</option>
+            <option>10</option>
+            <option>15</option>
+            <option>20</option>
           </select>
         </div>
       </div>
