@@ -238,7 +238,20 @@ module.exports = Vue.component('create_snippet', {
         "speed": "1000"
       };
       this.exercise.json_data.push(this.new_snippet);
-    }
+    },
+    parse_to_key: function (rootnote) {
+      // parse rootnote to key!
+      // let's try regex! 
+      var regex = /(.{1,2})\//g;
+      var key = String(rootnote.match(regex));
+      console.log(typeof key);
+      key = key.substr(0, key.length - 1);
+      key = key.charAt(0).toUpperCase() + key.substr(1);
+
+      this.key = key;
+      console.log(key);
+    },
+    calculate_answer: function (rootnote, questionnote) {}
   },
   template: `
     <div class='snippet'>
@@ -281,7 +294,7 @@ module.exports = Vue.component('create_snippet', {
       <div class='row'>
         <div class='small-6 columns'>
           <span>Root note: </span>
-          <select v-model="note_1">
+          <select v-model="note_1" v-on:click='parse_to_key(note_1)'>
             <option> c/4 </option>
             <option> c#/4 </option>
             <option> db/4 </option>
