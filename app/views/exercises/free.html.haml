@@ -1,10 +1,12 @@
 %body
   = render 'exercises/shared/sidebar'
   .exercise_container
-    #exercise
-      %h1 {{exercise.title}}
-      <template v-for="(snippet, index) in exercise.json_data">
-      <snippet :snippet_data='snippet' :index='index'></snippet>
-      </template>
+    .row 
+      .small-12.columns
+        #exercise
+          %h1 {{exercise.title}}
+          <template v-for="(snippet, index) in exercise.json_data">
+          <snippet :snippet_data='snippet' :index='index'></snippet>
+          </template>
 
   :javascript
