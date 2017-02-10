@@ -14,7 +14,7 @@
   border: 1px solid $border-color
   box-shadow: 1px 1px 1px $border-color 
   display: inline-block
-  width: 348px
+  width: 328px
   margin-left: 8px
   margin-bottom: 8px
   float: left
@@ -30,6 +30,12 @@
     display: block
     border: 1px solid $border-color
     box-shadow: 1px 1px 1px $border-color 
+    transition: all 200ms
+    margin-bottom: 8px
+    &:hover
+      transform: scale(1.02)
+      box-shadow: 2px 2px 2px $border-color 
+      background-color: $light-grey-background-color 
     &--dark-background
       background-color: $light-grey-background-color
   &__playbar
@@ -50,11 +56,18 @@
       height: 34px 
       padding: 0px
     &--wide
-      width: 154px
+      width: 241px
 
   &__play
     display: inline-block
     float: left
+
+  &-enter-active
+    transition: all .3s ease
+  &-leave-active
+    transition: all .3s ease
+  &-enter, &-leave-to, &-leave-active
+    opacity: 0
 
 .controls
   
@@ -62,3 +75,27 @@
     height: 1px
     width: 64px
     margin: 0px 8px 0px 8px
+
+.answer_input
+  margin: -8px
+  padding-bottom: 4px
+  background-color: $yellow-color
+  &__menu
+    margin: 0
+    list-style-type: none
+    padding: 4px
+
+  &__li
+    padding: 4px 8px
+    box-shadow: 1px 1px 1px $border-color 
+    margin: 2px 4px
+    border: 1px solid $green-color
+    color: white
+    background-color: $green-color
+    display: inline-block
+    transition: all 200ms
+    &:hover
+      cursor: pointer
+      transform: scale(1.1)
+      background: none
+      color: black

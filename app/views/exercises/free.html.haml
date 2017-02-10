@@ -5,8 +5,11 @@
       .small-12.columns
         #exercise
           %h1 {{exercise.title}}
+          {{ exercise_amount }}
+          <h1 v-if="exercise_amount < 1">DONE!</h1>
           <template v-for="(snippet, index) in exercise.json_data">
-          <snippet :snippet_data='snippet' :index='index'></snippet>
+          <snippet v-on:add_points='add_points' :snippet_data='snippet' :index='index' v-on:delete="delete_snippet(index)"></snippet>
           </template>
+          <p>Points: {{all_points}} </p>
 
   :javascript

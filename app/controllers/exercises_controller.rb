@@ -1,10 +1,6 @@
 class ExercisesController < ApplicationController
   def free
   end
-  def get_exercise
-    @exercise = Exercise.find(params[:id])
-    render json: @exercise 
-  end
 
   def index
   end
@@ -23,6 +19,8 @@ class ExercisesController < ApplicationController
   end
 
   def show
+    @exercise = Exercise.find(params[:id])
+    render json: @exercise 
   end
 
   def edit

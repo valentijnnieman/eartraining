@@ -11,7 +11,6 @@ module.exports = Vue.component('edit_snippet', {
   mixins: [snippet],
   methods: {
     delete_snippet: function() {
-      console.log("click!")
       this.$emit('delete')
     }
   },
@@ -20,6 +19,7 @@ module.exports = Vue.component('edit_snippet', {
       <div class='row'>
         <div class='small-2 columns'>
           <h3 class='centered' v-on:click='delete_snippet()'>b</h3>
+          <p>{{snippet_data.notes[1].key}}</p>
         </div>
       </div>
       <div class='row'>

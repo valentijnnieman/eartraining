@@ -8,7 +8,9 @@ var snippet = {
   props: ['snippet_data', 'index'],
   data: function() {
     return {
-      synth: new Synth(this.snippet_data.instrument)
+      synth: new Synth(this.snippet_data.instrument),
+      points: parseInt(this.snippet_data.points),
+      show: true
     }
   },
   methods: {
