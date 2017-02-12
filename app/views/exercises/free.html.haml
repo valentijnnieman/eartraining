@@ -1,10 +1,10 @@
 %body
   = render 'exercises/shared/sidebar'
-  .exercise_container
-    .row 
-      .small-12.columns
-        #exercise
-          %h1 {{exercise.title}}
+  #exercise
+    %h1.topbar {{exercise.title}}
+    .exercise_container
+      .row 
+        .small-12.columns
           <h1 v-if="exercise_amount < 1">DONE!</h1>
           <h3 v-if="exercise_amount < 1">Points: {{all_points}} </h3>
           <template v-for="(snippet, index) in exercise.json_data">

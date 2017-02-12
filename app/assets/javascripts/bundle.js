@@ -425,9 +425,13 @@ module.exports = Vue.component('snippet', {
       </div>
       <div class='row'>
         <div class='small-12 columns'>
-            <snippet__canvas :in_key_of='snippet_data.key' :notes='snippet_data.notes'></snippet_canvas>
+          <snippet__canvas :in_key_of='snippet_data.key' :notes='snippet_data.notes'></snippet_canvas>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='small-12 columns'>
           <div class='snippet__container'>
-            <button class='snippet__play button small radius' v-on:click='play'>play</button>
+            <button class='snippet__play button small radius' v-on:click='play'>&#9658</button>
             <div class='snippet__section snippet__section--small snippet__section--wide'>
               <snippet__visualizer ref='visualizer'></snippet__visualizer>
             </div>
