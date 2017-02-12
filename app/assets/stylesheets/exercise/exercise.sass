@@ -13,6 +13,19 @@
   text-align: center
   background-color: gold
 
+.exercise_link
+  padding: 8px 16px
+  background-color: $border-color 
+  transition: all 200ms
+  color: black
+  &__arrow
+    display: inline-block
+    float: right
+  &:hover
+    transform: scale(1.05) 
+    background-color: $almost-black-color
+    color: white
+
 .snippet
   padding: 14px
   padding-top: 10px
@@ -20,8 +33,7 @@
   box-shadow: 2px 2px 10px 1px $border-color 
   display: inline-block
   width: 328px
-  margin-left: 8px
-  margin-bottom: 8px
+  margin: 8px 4px
   float: left
   background-color: white
 

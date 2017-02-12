@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     get 'exercises/free' => 'exercises#free'
 
     resources :exercises
+    get 'exercises/load/:id' => 'exercises#load'
   end
 
   # Example of regular route:

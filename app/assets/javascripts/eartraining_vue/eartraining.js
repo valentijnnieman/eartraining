@@ -7,6 +7,11 @@ var CreateSnippet= require('./components/create_snippet.js');
 
 Vue.use(VueResource)
 
+function get_id() {
+	// returns last parameter of url, which *should* be the id
+	return window.location.href.substr(window.location.href.lastIndexOf('/') + 1)
+}
+
 Vue.component('snippet__points' , {
   props: ['amount'],
   template: "<div class='snippet__points'>{{amount}}</div>"
@@ -39,7 +44,7 @@ window.onload = function () {
     },
     mounted: function() {
       var self = this;
-      this.$http.get('2').then(function(response){
+      this.$http.get('/exercises/load/'+get_id()).then(function(response){
         self.exercise = response.body
         json_data = JSON.parse(response.body.json_data)
         self.exercise.json_data = json_data

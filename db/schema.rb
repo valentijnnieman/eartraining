@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161210182113) do
+ActiveRecord::Schema.define(version: 20170212153444) do
 
   create_table "exercises", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string  "title"
     t.text    "json_data",           limit: 65535
     t.integer "points"
     t.integer "amount_of_exercises"
+    t.integer "lessons_id"
+    t.index ["lessons_id"], name: "index_exercises_on_lessons_id", using: :btree
+  end
+
+  create_table "lessons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string   "title"
+    t.integer  "points"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
