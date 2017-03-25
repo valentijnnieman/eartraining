@@ -16,9 +16,9 @@ gulp.task('browserify', function() {
   return browserify('app/assets/javascripts/eartraining_vue/eartraining.js')
     .transform(babelify)
     .bundle()
-    .pipe(source('bundle.js'))
+    .pipe(source('exercise.js'))
     //.pipe(uglify({mangle: false}))
-    .pipe(gulp.dest('app/assets/javascripts/'))
+    .pipe(gulp.dest('app/assets/javascripts/exercise/'))
 });
 
 gulp.task('default', function () {

@@ -23,6 +23,9 @@ module.exports = Vue.component('snippet', {
     wrong_answer: function() {
       console.log('lookit! :' + typeof(this.points))
       this.points -= 1
+    },
+    halve_points: function() {
+      this.points = this.points / 2
     }
   },
   template: `
@@ -35,7 +38,7 @@ module.exports = Vue.component('snippet', {
       </div>
       <div class='row'>
         <div class='small-12 columns'>
-          <snippet__canvas :in_key_of='snippet_data.key' :notes='snippet_data.notes'></snippet_canvas>
+          <snippet__canvas v-on:show_notes='halve_points' :in_key_of='snippet_data.key' :notes='snippet_data.notes'></snippet_canvas>
         </div>
       </div>
       <div class='row'>
@@ -55,7 +58,7 @@ module.exports = Vue.component('snippet', {
 
 Vue.component('snippet__canvas', {
   mixins: [sheet],
-  template: "<canvas height=80 width=296 class='snippet__canvas' ref='canvas'></canvas>",
+  template: "<canvas height=80 width=296 class='snippet__canvas' v-on:click='render' ref='canvas'></canvas>",
 })
 
 Vue.component('snippet__input', {

@@ -7,15 +7,34 @@ var AudioEngine = require('../classes/engine.js')
 var snippet = require('../mixins/snippet.js')
 var sheet = require('../mixins/sheet.js')
 
+var possible_notes = require('../data/possible_notes.js')
+var possible_keys = require('../data/possible_keys.js')
+var interval_list = require('../data/interval_list.js')
+
 module.exports = Vue.component('create_snippet', {
   // TO-DO: propagate to parents
   props: ['exercise'],
   data: function(){
     return { 
       key: "C",
-      note_1: 'c/4',
-      note_2: 'eb/4',
+      type: 'interval',
+      instrument: 'sine',
+      answer: "m3",
+      points: 10,
+      root_note: 'c/4',
+      question_note: 'eb/4',
       new_snippet: {}
+    }
+  },
+  computed: {
+    possible_notes: function() {
+      return possible_notes;
+    },
+    possible_keys: function() {
+      return possible_keys;
+    },
+    interval_list: function() {
+      return interval_list;
     }
   },
   methods: {
@@ -24,13 +43,13 @@ module.exports = Vue.component('create_snippet', {
         "key": this.key,
         "type": this.type,
         "instrument": this.instrument,
-        "answer": "m3",
+        "answer": this.answer,
         "points": this.points, 
         "notes": [{
-          "key": this.note_1,
+          "key": this.root_note,
           "duration": "q"
         },{
-          "key": this.note_2,
+          "key": this.question_note,
           "duration": "q"
         }],
         "speed": "1000"
@@ -50,7 +69,11 @@ module.exports = Vue.component('create_snippet', {
       console.log(key)
     },
     calculate_answer: function(rootnote, questionnote) {
-      
+      var index_of_root = possible_notes.indexOf(rootnote) 
+      var index_of_question = possible_notes.indexOf(questionnote) 
+
+      console.log(index_of_root)
+      console.log(index_of_question)
     }
   },
   template: `
@@ -59,12 +82,7 @@ module.exports = Vue.component('create_snippet', {
         <div class='small-8 columns'>
           <span>Key: </span>
           <select v-model="key">
-            <option> C </option>
-            <option> C# </option>
-            <option> D </option>
-            <option> D# </option>
-            <option> E </option>
-            <option> F </option>
+            <option v-for="key in possible_keys">{{key}}</option>
           </select>
         </div>
         <div class='small-4 columns'>
@@ -94,34 +112,26 @@ module.exports = Vue.component('create_snippet', {
       <div class='row'>
         <div class='small-6 columns'>
           <span>Root note: </span>
-          <select v-model="note_1" v-on:click='parse_to_key(note_1)'>
-            <option> c/4 </option>
-            <option> c#/4 </option>
-            <option> db/4 </option>
-            <option> d/4 </option>
-            <option> d#/4 </option>
-            <option> eb/4 </option>
-            <option> e/4 </option>
-            <option> f/4 </option>
+          <select v-model="root_note" v-on:change='parse_to_key(root_note)'>
+            <option v-for="note in possible_notes">{{note}}</option>
           </select>
         </div>
         <div class='small-6 columns'>
           <span>Question note: </span>
-          <select v-model="note_2">
-            <option> c/4 </option>
-            <option> c#/4 </option>
-            <option> db/4 </option>
-            <option> d/4 </option>
-            <option> d#/4 </option>
-            <option> eb/4 </option>
-            <option> e/4 </option>
-            <option> f/4 </option>
+          <select v-model="question_note" v-on:change='calculate_answer(root_note, question_note)'>
+            <option v-for="note in possible_notes">{{note}}</option>
           </select>
         </div>
       </div>
       <div class='row'>
         <div class='small-2 columns'>
           <h3 class='centered' v-on:click='add_new_snippet()'>+</h3>
+        </div>
+        <div class='small-6 columns'>
+          <span>Answer: </span>
+          <select v-model="answer">
+            <option v-for="interval in interval_list">{{interval}}</option>
+          </select>
         </div>
       </div>
     </div>`

@@ -10,9 +10,13 @@ Rails.application.routes.draw do
   authenticate :user do
     get 'dashboard/index'
     get 'exercises/free' => 'exercises#free'
+    get 'exercises/:id' => 'exercises#show'
 
-    resources :exercises
     get 'exercises/load/:id' => 'exercises#load'
+  end
+  
+  authenticate :admin do
+    resources :exercises
   end
 
   # Example of regular route:

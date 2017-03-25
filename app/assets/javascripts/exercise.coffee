@@ -1,6 +1,7 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/#
+//= require 'exercise/exercise.js'
+
+console.log("exercise loading!")
+
 $(document).ready ->
   $('#sidebar-menu-button').on ('click'), (e)->
     if $('#sidebar-menu').hasClass("hide")
