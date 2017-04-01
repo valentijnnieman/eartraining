@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/maxlapshin/mysql2postgres.git
+  revision: 2ec92a230449a8d24e6f9c7e6beee755658150a5
+  specs:
+    mysqltopostgres (0.3.0)
+      mysql-pr (~> 2.9)
+      postgres-pr (~> 0.6)
+      test-unit (~> 2.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -104,6 +113,7 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.9.0)
     multi_json (1.12.1)
+    mysql-pr (2.9.11)
     mysql2 (0.4.4)
     nio4r (1.2.1)
     nokogiri (1.6.8)
@@ -111,6 +121,7 @@ GEM
       pkg-config (~> 1.1.7)
     orm_adapter (0.5.0)
     pkg-config (1.1.7)
+    postgres-pr (0.7.0)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -167,6 +178,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    test-unit (2.5.5)
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.5)
@@ -200,6 +212,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   mysql2
+  mysqltopostgres!
   rails (= 5.0.0.1)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)

@@ -611,7 +611,7 @@ window.onload = function () {
     },
     mounted: function () {
       var self = this;
-      this.$http.get('/exercises/load/' + get_id()).then(function (response) {
+      this.$http.get('/exercises/load/3').then(function (response) {
         self.exercise = response.body;
         json_data = JSON.parse(response.body.json_data);
         self.exercise.json_data = json_data;
@@ -690,6 +690,12 @@ var sheet = {
         this.$emit('show_notes');
       }
     }
+  },
+  mounted: function () {
+    this.renderer = new Vex.Flow.Renderer(this.$refs.canvas, Vex.Flow.Renderer.Backends.CANVAS);
+    this.vexCtx = this.renderer.getContext();
+    var stave = new Vex.Flow.Stave(8, -16, 282);
+    stave.addClef("treble").addKeySignature(this.in_key_of).setContext(this.vexCtx).draw();
   }
 };
 

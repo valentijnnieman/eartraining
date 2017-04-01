@@ -35,6 +35,13 @@ var sheet = {
         this.$emit('show_notes')
       }
     }
+  },
+  mounted: function() {
+    this.renderer = new Vex.Flow.Renderer(this.$refs.canvas,
+      Vex.Flow.Renderer.Backends.CANVAS)
+    this.vexCtx = this.renderer.getContext()
+    var stave = new Vex.Flow.Stave(8, -16, 282);
+    stave.addClef("treble").addKeySignature(this.in_key_of).setContext(this.vexCtx).draw();
   }
 }
 

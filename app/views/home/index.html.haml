@@ -1,18 +1,19 @@
+= javascript_include_tag :exercise
 .hero
   .row
     .small-12.medium-4.columns.medium-offset-8
-      = link_to new_user_session_url do
-        .button.register_button Log in
+      -#= link_to new_user_session_url do
+      -#.button.register_button Log in
   .row
     .small-12.medium-10.medium-centered.columns
       %h1.hero__header Ear Training
   .row
     .small-12.medium-10.medium-centered.columns
-      %h4.hero__subheader Learn music theory by listening
+      %h4.hero__subheader COMING SOON
   .row
     .small-12.medium-4.medium-centered.columns
-      = link_to new_user_registration_url do
-        .button.register_button.register_button--full Sign up
+      -#= link_to new_user_registration_url do
+      -#.button.register_button.register_button--full Sign up
 
 .feature_grid
   .row.align-center
@@ -41,5 +42,16 @@
       -#.feature_showcase__img.feature_showcase__img--product
   .row
     .small-12.columns
-      %h3.feature_showcase__header Sign up now to get access to unlimited solfège exercises! 
+      %h3.feature_showcase__header Below is an interactive example of an exercise:
+
+#exercise
+  %h1.topbar {{exercise.title}}
+  .exercise_container
+    .row 
+      .small-12.columns
+        <h1 v-if="exercise_amount < 1">DONE!</h1>
+        <h3 v-if="exercise_amount < 1">Points: {{all_points}} </h3>
+        <template v-for="(snippet, index) in exercise.json_data">
+        <snippet v-on:add_points='add_points' :snippet_data='snippet' :index='index' v-on:delete="delete_snippet(index)"></snippet>
+        </template>
 

@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
 
+gem 'mysqltopostgres', git: "https://github.com/maxlapshin/mysql2postgres.git"
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.0.0.1'
 # Use mysql as the database for Active Record

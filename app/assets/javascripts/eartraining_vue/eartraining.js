@@ -44,7 +44,7 @@ window.onload = function () {
     },
     mounted: function() {
       var self = this;
-      this.$http.get('/exercises/load/'+get_id()).then(function(response){
+      this.$http.get('/exercises/load/3').then(function(response){
         self.exercise = response.body
         json_data = JSON.parse(response.body.json_data)
         self.exercise.json_data = json_data
