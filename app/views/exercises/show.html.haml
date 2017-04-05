@@ -6,13 +6,14 @@
   #exercise
     %h1.topbar 
       {{exercise.title}}
-      .topbar__user{id: current_user.id}= "Welcome, #{current_user.email}"
+      .topbar__user{id: current_user.id}
     .exercise_container
       .row 
         .small-12.columns
           <div v-cloak>
-          <h1 v-if="exercise_amount < 1">DONE!</h1>
-          <h3 v-if="exercise_amount < 1">Points: {{all_points}} </h3>
+          <h1 class='exercise__message' v-if="exercise_amount < 1">Good job!</h1>
+          <h3 class='exercise__message' v-if="exercise_amount < 1">you earned: {{all_points}} points</h3>
+          <a class='exercise__back_link'href='/dashboard/index' v-if="exercise_amount < 1">&#8592; back</a>
           <template v-for="(snippet, index) in exercise.json_data">
           <snippet v-on:add_points='add_points' :snippet_data='snippet' :index='index' v-on:delete="delete_snippet(index)"></snippet>
           </template>
