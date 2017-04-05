@@ -2,10 +2,10 @@
 1 verbose cli [ '/usr/local/bin/node',
 1 verbose cli   '/usr/local/bin/npm',
 1 verbose cli   'run-script',
-1 verbose cli   'build' ]
+1 verbose cli   'watch' ]
 2 info using npm@4.1.1
 3 info using node@v5.2.0
-4 verbose stack Error: missing script: build
+4 verbose stack Error: missing script: watch
 4 verbose stack     at run (/usr/local/lib/node_modules/npm/lib/run-script.js:151:19)
 4 verbose stack     at /usr/local/lib/node_modules/npm/lib/run-script.js:61:5
 4 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:356:5
@@ -18,10 +18,10 @@
 4 verbose stack     at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:402:12)
 5 verbose cwd /Users/valentijnnieman/dev/ruby/eartraining
 6 error Darwin 16.4.0
-7 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "run-script" "build"
+7 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "run-script" "watch"
 8 error node v5.2.0
 9 error npm  v4.1.1
-10 error missing script: build
+10 error missing script: watch
 11 error If you need help, you may report this error at:
 11 error     <https://github.com/npm/npm/issues>
 12 verbose exit [ 1, true ]
