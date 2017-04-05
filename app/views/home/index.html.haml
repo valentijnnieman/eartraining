@@ -1,3 +1,5 @@
+- content_for :javascript_files do
+  = javascript_include_tag :home
 .hero
   .row
     .small-12.medium-10.medium-centered.columns
@@ -36,9 +38,25 @@
         
 .feature_showcase
   .row
-    -#.small-12.columns
-      -#.feature_showcase__img.feature_showcase__img--product
+    .small-12.columns
+      .feature_showcase__img.feature_showcase__img--product
   .row
     .small-12.columns
-      %h3.feature_showcase__header Sign up now to get access to unlimited solfège exercises! 
+      %h3.feature_showcase__header Sign up now to get access to the alpha! 
+
+.demo
+  #exercise
+    %h1.topbar 
+      Demo of an exercise
+    .exercise_container
+      .row 
+        .small-12.columns
+          <div v-cloak>
+          <h1 class='exercise__message' v-if="exercise_amount < 1">Good job!</h1>
+          <h3 class='exercise__message' v-if="exercise_amount < 1">you earned: {{all_points}} points</h3>
+          <a class='exercise__back_link'href='/dashboard/index' v-if="exercise_amount < 1">&#8592; back</a>
+          <template v-for="(snippet, index) in exercise.json_data">
+          <snippet v-on:add_points='add_points' :snippet_data='snippet' :index='index' v-on:delete="delete_snippet(index)"></snippet>
+          </template>
+          </div>
 

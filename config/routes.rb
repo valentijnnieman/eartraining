@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
     get 'exercises/load/:id' => 'exercises#load'
   end
+  get 'exercises/demo/:id' => 'exercises#load'
   post '/add_points/:id/:points' => 'users#add_points'
   
 
