@@ -594,11 +594,16 @@ window.onload = function () {
       };
     },
     methods: {
+      completed_exercise: function () {
+        var user_id = document.getElementsByClassName('topbar__user')[0].id;
+        fetch('/add_points/' + user_id + '/' + this.all_points, { method: 'POST' }).then(function (response) {
+          console.log(response);
+        });
+      },
       add_points: function (points) {
-        console.log('all_points: ' + typeof this.all_points);
-        console.log('points: ' + typeof points);
         this.all_points += points;
         this.exercise_amount -= 1;
+        if (this.exercise_amount < 1) this.completed_exercise();
       },
       delete_snippet: function (i) {
         // TO-DO: This now deletes the last element added instead of the one clicked on

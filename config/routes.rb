@@ -13,10 +13,10 @@ Rails.application.routes.draw do
     get 'exercises/:id' => 'exercises#show'
 
     get 'exercises/load/:id' => 'exercises#load'
-
-    post 'users/id/:points' => 'sessions#add_points'
   end
+  post '/add_points/:id/:points' => 'users#add_points'
   
+
   authenticate :admin do
     resources :exercises
   end

@@ -4,7 +4,9 @@
 %body
   = render 'exercises/shared/sidebar'
   #exercise
-    %h1.topbar {{exercise.title}}
+    %h1.topbar 
+      {{exercise.title}}
+      .topbar__user{id: current_user.id}= "Welcome, #{current_user.email}"
     .exercise_container
       .row 
         .small-12.columns
